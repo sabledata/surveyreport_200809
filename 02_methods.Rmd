@@ -1,0 +1,107 @@
+# Methods
+
+## SURVEY DESIGN
+ 
+Survey design for `r yr` and `r yr+1` sablefish research and assessment employed a stratified random sampling (StRS) component and a traditional standardized component (Table \@ref(tab:Table1)). In `r yr`,  two exploratory sets were added (Figure \@ref(fig:figure1)).  Under the StRS component, random fishing sets were conducted in five spatial and three depth strata (Figure \@ref(fig:figure2), and Figure \@ref(fig:figure3)).  The traditional component consisted of standardized fishing sets at nine offshore indexing localities (Figure \@ref(fig:figure2), and Figure \@ref(fig:figure3)) and four mainland inlets (Figure \@ref(fig:figure4)).
+
+### STRATIFIED RANDOM SAMPLING SURVEY DESIGN COMPONENT
+
+The StRS design began in 2003 with the purpose of distributing tag releases at random, collecting biological samples and developing a catch-rate based index of abundance [@Wyeth2003]. It also provided an alternative design to the historic traditional offshore component of the survey which occured at fixed locations. 
+
+Under the StRS design, the survey area is partitioned into five spatial strata (S~1~ to S~5~) and three depth strata (RD~1~ to RD~3~) for a total of 15 strata. The spatial strata are S~1~ (South West Coast Vancouver Island or SWCVI), S~2~ (North West Coast Vancouver Island or NWCVI), S~3~ (Queen Charlotte Sound or QCS), S~4~ (South West Coast of Haida Gwaii or SWCHG), and S~5~ (North West Coast of Haida Gwaii or NWCHG).  The three targeted depth ranges were 100-250 fathoms (RD~1~), 250-450 fathoms (RD~2~), and 450-750 fathoms (RD~3~). The area within each of the 15 strata were divided into 2 km x  2 km grid cells or ‘fishing blocks’ from which set locations were randomly chosen (Figure \@ref(fig:figure1)).
+
+From 2003 through 2005, five grid cells were randomly selected in each spatial-depth stratum. From 2006 through 2009, the number was increased to six (Table \@ref(tab:Table2)). 
+ 
+### TRADITIONAL OFFSHORE INDEXING SURVEY COMPONENT
+
+Five strings of trap gear were set within nine offshore indexing localities:  Barkley Canyon, Esperanza Inlet, Quatsino Sound, Triangle Island, Cape St. James, Gowgaia Bay, Buck Point, Hippa Island and Langara Island-North Frederick (Appendix \@ref(app:first-appendix)), with one string in each of one of 5 depth intervals: 150-249, 250-349, 350-450, 450-550, and 550-650 fathoms (Table \@ref(tab:Table1)). The intent of the standardized sets at offshore indexing localities was to collect catch rate data in order to index trends in abundance, tag fish and obtain biological samples. 
+
+### TRADITIONAL MAINLAND INLET SURVEY COMPONENT
+
+Under the traditional mainland inlet design, a string of 25 traps were set at five specific localities in each of the following 4 areas: Portland Inlet, Gil Island, Finlayson Channel, and Dean/Burke Channel. Trap gear was deployed near the center of each of the five locality boundaries in order to avoid the steep slopes characteristic of these channels/fjords (Figure \@ref(fig:figure4)).
+
+### EXPLORATORY COMPONENT (2008)
+
+To evaluate areas that have not been surveyed for sablefish density and/or size composition, exploratory sets were conducted in 2008 near Porcher Peninsula and Goshen Island (Figure \@ref(fig:figure1)).
+
+## VESSEL
+
+The `r yr` and `r yr + 1` surveys were chartered aboard the F/V `r boat1` (Figure \@ref(fig:figure5)), skippered by `r captain1` between `r dates1`, `r yr` and `r dates2`, `r yr + 1` (Appendix \@ref(app:second-appendix)).  Further information about the vessel can be found at [\underline{http://marinetraffic.com}](http://marinetraffic.com). 
+
+## FISHING GEAR
+
+The longline trap gear consisted of a groundline resting on the ocean floor with 25 baited traps attached to beckets at 150 foot intervals along its length and 90 pound anchors at each end (Figure \@ref(fig:figure6), a). A flagpole was required for at least one end of the set to improve visibility for retrieval. The traps were standard Ladner traps with a bottom hoop diameter of 54 inches and covered with black nylon #48 thread, with a web of 2.75 inch mesh (Figure \@ref(fig:figure6), b). The tunnels were made of green braided, knotless, rashell 2.0 inch mesh. The traps had stainless steel escape rings closed off by orange twine sewn repeatedly across the ring opening.
+
+Standard bait bags (6 by 12 inches) made of 1/8 inch web with a nylon drawstring and stainless steel halibut longline snap were included with the traps. 
+
+## FISHING OPERATIONS
+
+During normal survey fishing operations gear was deployed on alternate days. Prior to deployment, the Fishing Master inspected the block to determine fishability and if it was within the targeted depth range.  The goal was to have as much gear as possible within the block boundaries.  If unfishable, the survey protocol dictates that an alternate block is to be chosen to the east, west, north, and south, respectively. If none of those blocks meet the fishing criteria, an alternate block of the same area and depth strata was randomly chosen.
+
+Two science staff recorded information associated with the deployment of the gear. One science member was positioned in the wheelhouse and entered details about the set in the bridge log data form (Appendix \@ref(app:third-appendix), Figure C.1). The time at the deployment of the first buoy and anchor were logged and later, the time at the retrieval of the second buoy and anchor.  The duration of the set was calculated as the time elapsed between the first anchor being set over the stern and the first anchor hauled aboard.  The geo-referenced positions were obtained from Nobeltec Navigation © software running on the bridge computer, delivered through a NMEA data string. 
+
+A set log was filled out on the deck by the science recorder who had maximum visibility of the crew setting the traps over the stern rail. The set log included the time and identity of the first and last buoys, anchor time, a tally of beckets and traps, as well as the serial number of each Sea-bird Bird SBE 39 temperature and pressure logger.
+
+Sets at offshore indexing localities had a targeted soak time of 24 hours.  Traps were baited with one pound of bagged squid.  StRS blocks also had a targeted soak time of 24 hours.  Fishing sets were designated useable if hauled between 22 and 26 hours. StRS traps were baited with 10 pounds of loose offshore Pacific Hake (*Merluccius productus*) and two pounds of bagged squid.  Fishing sets in mainland inlet localities had a targeted soak time of 18 hours. These sets were designated useable if hauled between 16 and 20 hours, compatible with the historic inlet survey protocols.  Traps were baited with two pounds of bagged squid (Table \@ref(tab:Table1)). 
+
+## CATCH PROCESSING
+
+As the groundline was hauled, catch by species from each trap were sorted into baskets and entered in the charter catch log form (Appendix \@ref(app:third-appendix), Figure C.2).  Baskets were then weighed to the nearest 0.2 kg on a motion compensating scale and given a basket use code of D, A, B, T or MT.   Code D designated fish species as discards (released alive); code A allocated fish to age samples; code B allocated sablefish for length, sex, maturtiy samples; code T allocated sablefish to be tagged and released; code L allocated fish for length samples; and code MT indicated an empty trap.  Trace values (TR) were entered to record species with a total weight of less than 1 kg. 
+
+The Federal Court of Appeal ruling (Larocque v. Canada (Minister of Fisheries and Oceans Canada) [@Larocque2006]) was used to support scientific research of key commercial fish in place of quota allocation.  As a result, sablefish in traps assigned code D were released at sea.
+
+Crew members would inform the recorder about any damage to a trap and report the serial number of the temperature and pressure logger.  The next day, the entries on charter catch log form were transposed to tabular format on the charter catch log entry form (Appendix \@ref(app:third-appendix), Figure C.3).
+
+### SABLEFISH ALLOCATION DETAILS
+
+Up to 60 sablefish at offshore indexing localities were allocated throughout the string for a biological sample of length, sex, weight, maturity and otoliths (LSWMO) and up to 80 sablefish were allocated along the string for a biological sample of length, sex and maturity (LSM).  StRS sets used a sampling protocol that assigned a fate to the sablefish catch in each trap, dividing the 25 traps so that 1/3 of the traps were used for tagging, 1/3 were used for biological samples (~50 specimens) and 1/3 were released alive. At mainland inlet sites, sablefish catch from 1/2 of the traps were allocated for biosamples (~50 specimens) and 1/2 of the traps were used for tagging (Table \@ref(tab:Table1)).
+
+## BIOLOGICAL SAMPLING
+
+Biological samples at offshore indexing localities were obtained from sablefish on the length, sex and maturity (LSM) sampling form (Appendix \@ref(app:third-appendix), Figure C.4). Biological samples were collected from sablefish specimens on the LSWMO form (Appendix \@ref(app:third-appendix), Figure C.5).   Measurements were recorded for fork length (L), body weight (W), sex (S) and maturity level (M). Sagittal otoliths (O) were collected and stored for potential ageing by the sclerochronology laboratory.
+
+Biological sampling forms were completed for specimens other than sablefish. Species specific length (L) and sex (S) were collected from other species on the LSS form (Appendix \@ref(app:third-appendix), Figure C.6).  
+
+## SABLEFISH TAGGING
+
+Fish destined to be tagged were transferred from the sorting area to a tagging tank.  Sablefish were tagged with a Mark II Long Tagging gun loaded with Floy FD-94 T-bar anchor tags.  The tag was inserted on the left side of the fish, one (1) cm below and 2-3 cm behind the anterior insertion of the first dorsal fin.  Fork length (mm to the nearest ½ cm) measurements were taken on the Scantrol measuring board and recorded on the tagging form.  Before release, any sampling errors, injuries or damage to the fish were documented. Tag checks were performed systematically to ensure tag numbers on the data form matched those on the fish specimen (Appendix \@ref(app:third-appendix), Figure C.7).
+
+## SABLEFISH TAG RECOVERY
+
+Any previously tagged fish brought aboard were treated in one of two ways.  First, sablefish with Canadian tags were re-released with a new tag and the previous tag was removed. In addition, any wounds from the old tag were recorded.  Second, sablefish with a foreign agency tag or sablefish that had sustained numerous injuries were retained for biological sampling.  For these specimens, data were recorded on the tag recovery sheet and any foreign tags were later returned to their country of origin (Appendix \@ref(app:third-appendix), Figure C.8).
+
+
+```{r SensorText, echo=FALSE}
+
+   # -- oceanographic sensor text:  determine the number of sets that deployed SBE and HOBO and CTD
+   sense.yr1  <- paste("select Year, SUM(SBE39) AS SBE39, SUM(HOBO) AS HOBO, ",
+                       "SUM(CTD) AS CTD, SUM(CAM) AS CAM ",
+                       "from dbo.Report_SBE_HOBO_IND ",
+                       "group by Year having (Year =", yr,")", sep="")
+   #sensor.yr1 <-  GetSQLData(sense.yr1,"Sablefish")   # query SQL Server
+   #write.table(sensor.yr1, file = paste(path,"methods1.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",") 
+   sensor.yr1 <-  read.csv(paste(path,'methods1.csv',sep=''),header=T)
+   #print(sensor.yr1)
+   
+   sense.yr2 <-  paste("select Year, SUM(SBE39) AS SBE39, SUM(HOBO) AS HOBO, ",
+                       "SUM(CTD) AS CTD, SUM(CAM) AS CAM ",
+                       "from dbo.Report_SBE_HOBO_IND ",
+                       "group by Year having (Year =", yr+1,")", sep="")
+   #sensor.yr2 <-  GetSQLData(sense.yr2,"Sablefish")  # query SQL Server
+   #write.table(sensor.yr2, file = paste(path,"methods2.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",") 
+   sensor.yr2 <-  read.csv(paste(path,'methods2.csv',sep=''),header=T)
+   #print(sensor2)  #review sensors used
+ 
+```
+
+## OCEANOGRAPHIC SENSOR DATA COLLECTION
+
+A Sea-bird Bird SBE 39 temperature and pressure logger was placed in a protective plastic pipe and attached to the inside of the third traps on each string.    The logger data in the form of temperature, depth, date and time was downloaded after hauling using the Sea-Bird Electronics SeaTerm © software. 
+
+
+## ELECTRONIC MONITORING VIDEO DATA COLLECTION  
+
+During haulback, the electronic monitoring (EM) system cameras were activated by the hydraulic sensor.  Standard analog cameras were positioned at optimal viewing angles to record survey activities.  Video of catch processed at the hopper was reviewed following the `r yr` and `r yr+1` surveys and corrections were made during post-electronic data entry.
+
+
+\clearpage

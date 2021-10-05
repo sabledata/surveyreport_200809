@@ -1,0 +1,867 @@
+# Tables
+
+(ref:Table1Caption) Components of the `r yr` and `r yr+1` sablefish research and assessment surveys.
+\ \
+\ \
+
+```{r Table1, echo=FALSE}
+
+# --  Create a dataframe for components of the surveys
+   Component    <- c(
+                     "Stratified", "random ", "sampling (StRS)",    
+                     "Traditional"," Offshore","Standardized","","","","","","",
+                     "Traditional", "Inlet ","Standardized","",
+                     "Exploratory","",""
+                     ) 
+   Bait         <- c("2 lbs frozen", "squid (bagged),","10 lbs Hake (loose)",
+                     "1 lb frozen ", "squid","(bagged)","","","","" ,"","",
+                     "2 lbs frozen ", "squid","(bagged)", "",
+                     "2 lbs frozen ", "squid (bagged),","10 lbs Hake (loose)") 
+   
+   Protocol     <- c("1/3 traps discarded,","1/3 traps for tagging,","1/3 traps for biosamples",
+                     "50-60 piece LSWMO,","up to 80 piece LSM","","","","","","","",
+                     "1/2 traps used for tagging,","1/2 traps used for","biosamples","",
+                     "Shallow experimental sets,", "search for small sablefish.","Traps (10) every second becket"
+                      )
+          
+   Locations    <- c("Five spatial strata", "(S1-S5)", "",
+                     "Langara Is-North Frederick", 
+                     "Hippa Island", "Buck Point",
+                     "Gowgaia Bay",  "Cape St.James", 
+                     "Triangle Island", "Quatsino Sound", 
+                     "Esperenza Inlet", "Barkley Canyon",
+                     "Dean/Burke Channel", 
+                     "Finlayson Channel", 
+                     "Gil Island", 
+                     "Portland Inlet",
+                     "Porcher Peninsula",  "Goshen Island",   "")
+  Completed2008   <-  c("90","","","5","5","5","5","5","5","5","5","5",
+                             "5","5","5","5", 
+                             "","","")
+  Completed2009   <-  c("90","","","","","","","","","","","",
+                             "5","5","5","5",
+                             "1","1","")
+
+   df           <- data.frame(Component, Bait, Protocol, Locations, Completed2008, Completed2009) 
+   df$Locations <- as.character(df$Locations)
+   df[2,4]     <- paste("(S","\\textsubscript{1}"," - S","\\textsubscript{5}",")",sep='' )
+   colnames(df) <- c("Component", "Bait", "Sample Protocol", "Locations", "2008","2009")
+
+   kableExtra::kable(df, escape = F,  # allows latex for subscript
+               booktabs = TRUE, linesep = "",
+               format = "latex",  caption = "(ref:Table1Caption)") %>%
+               row_spec(0,   bold = T)        %>%
+               row_spec(3,   hline_after = T) %>%
+               row_spec(12,  hline_after = T) %>%
+               row_spec(16,  hline_after = T) %>%
+               column_spec(1, width  = "1.8cm") %>%
+               column_spec(2, width  = "2.2cm") %>%
+               column_spec(3, width  = "3.8cm") %>% 
+               column_spec(4, width  = "3.8cm") %>%   
+               column_spec(5, width  = "0.6cm") %>%
+               column_spec(6, width  = "0.6cm") %>%
+     
+     
+   add_header_above(c(" "= 4, "Sets Completed" = 2), bold=T) %>%  
+   kableExtra::kable_styling(font_size = 9, 
+                             position = "left",
+                             latex_options = "hold_position")
+
+```
+\ \
+\ \
+(ref:Table2Caption) Sets completed for StRS component of the the `r yr` and `r yr+1` (blue) surveys by spatial and depth strata.
+\ \
+\ \
+
+```{r Table2, echo=FALSE}
+
+       S1   <- paste("S\\textsubscript{1}", " (South West Coast Vancouver Island or SWCVI)", sep='')
+       S2   <- paste("S\\textsubscript{2}", " (North West Coast Vancouver Island or NWCVI)", sep='')
+       S3   <- paste("S\\textsubscript{3}", " (Queen Charlotte Sound or QCS)", sep='')
+       S4   <- paste("S\\textsubscript{4}", " (South West Coast Haida Gwaii or SWCHG)", sep='')
+       S5   <- paste("S\\textsubscript{5}", " (North West Coast Haida Gwaii or NWCHG)", sep='')
+       
+       Strata      <- c(S1,S2,S3,S4,S5)
+
+       act.strata  <- paste("select Year, DEPTH_STRATUM, SPATIAL_STRATUM, COUNT([SET]) AS sets ",
+                           "from dbo.GFBIO_RESEARCH_TRIPS ",
+                           "group by Year, DEPTH_STRATUM, SPATIAL_STRATUM ",
+                           "having Year In( ", yr ,",", yr+1, " ) AND DEPTH_STRATUM IN('RD1','RD2','RD3') ",
+                           "order by Year, DEPTH_STRATUM, SPATIAL_STRATUM", sep="")
+       #surv.strata <- GetSQLData(act.strata,"Sablefish")
+       #write.table(surv.strata, file = paste(path,"Table01.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+       surv.strata  <-  read.csv(paste(path,'Table01.csv',sep=''), header=T)
+       surv.strata1 <-  cbind(Strata,
+                              surv.strata[surv.strata$Year == yr   & surv.strata$DEPTH_STRATUM=='RD1', ], 
+                              surv.strata[surv.strata$Year == yr+1 & surv.strata$DEPTH_STRATUM=='RD1' ,],
+                              surv.strata[surv.strata$Year == yr   & surv.strata$DEPTH_STRATUM=='RD2', ], 
+                              surv.strata[surv.strata$Year == yr+1 & surv.strata$DEPTH_STRATUM=='RD2' ,],
+                              surv.strata[surv.strata$Year == yr   & surv.strata$DEPTH_STRATUM=='RD3', ], 
+                              surv.strata[surv.strata$Year == yr+1 & surv.strata$DEPTH_STRATUM=='RD3' ,] )
+       
+       surv.strata2           <-  surv.strata1[, c(1,5,9,13,17,21,25)]  #reorder Table
+       surv.strata2$Strata    <-  as.character(surv.strata2$Strata)
+       colnames(surv.strata2) <-  c("Spatia Strata","RD1.1","RD1.2","RD2.1", "RD2.2", "RD3.1", "RD3.2")
+
+       
+       surv.strata2 <-surv.strata2 %>%
+             mutate(TotalStrata1 = select(., RD1.1,RD2.1,RD3.1) %>% rowSums(na.rm = TRUE))  # total year 1
+          
+       surv.strata2 <-surv.strata2 %>%
+             mutate(TotalStrata2 = select(., RD1.2,RD2.2,RD3.2) %>% rowSums(na.rm = TRUE)) # total year 2
+       
+       surv.strata3 <- rbind(surv.strata2, c("Total",sum(surv.strata2$RD1.1),
+                                                     sum(surv.strata2$RD1.2), 
+                                                     sum(surv.strata2$RD2.1),
+                                                     sum(surv.strata2$RD2.2),
+                                                     sum(surv.strata2$RD3.1),
+                                                     sum(surv.strata2$RD3.2),
+                                                     sum(surv.strata2$TotalStrata1),
+                                                     sum(surv.strata2$TotalStrata2) ))
+       
+       colnames(surv.strata3) <-  c("Spatia Strata", 
+                                    paste("RD","\\textsubscript{1}"," ", yr,sep=''), paste("RD","\\textsubscript{1}"," ",yr+1,sep=""),
+                                    paste("RD","\\textsubscript{2}"," ", yr,sep=''), paste("RD","\\textsubscript{2}"," ",yr+1,sep=""),
+                                    paste("RD","\\textsubscript{3}"," ", yr,sep=''), paste("RD","\\textsubscript{3}"," ",yr+1,sep=""),
+                                    paste("Total ",yr,sep=''),paste("Total ",yr+1,sep='')) 
+       
+      kableExtra::kable(surv.strata3, booktabs = TRUE, linesep = "",
+                        format = "latex",escape = F,
+                        caption = "(ref:Table2Caption)") %>%
+                        row_spec(0,    bold = T) %>%
+                        row_spec(5, hline_after = T) %>%
+                        column_spec(2, width  = "0.5cm") %>%
+                        column_spec(3, width  = "0.5cm", color="blue" ) %>%
+                        column_spec(4, width  = "0.5cm") %>%
+                        column_spec(5, width  = "0.5cm", color="blue") %>% 
+                        column_spec(6, width  = "0.5cm") %>% 
+                        column_spec(7, width  = "0.5cm", color="blue") %>%          
+                        column_spec(8, width  = "0.7cm") %>%
+                        column_spec(9, width  = "0.5cm", color="blue") %>% 
+                        row_spec(0, color="black") %>%
+                        row_spec(6, bold=T) %>%
+                        add_header_above(c(" "= 1, "Depth Strata" = 6, " " = 2), bold=T) %>%
+        
+       kableExtra::kable_styling(font_size = 9, position = "left",latex_options = "hold_position")
+  
+```
+\clearpage
+
+(ref:Table3Caption) Summary of species captured during the `r yr` survey StRS sets conducted by the `r boat1`.
+\ \
+\ \
+
+```{r Table3,  echo=FALSE}
+
+  options(knitr.kable.NA = '')
+  data.species   <- paste("exec procRReport_SpeciesSummary ", yr," ,'StRS'",sep="")
+  #data.sp.strs  <- GetSQLData(data.species,"Sablefish")
+  #write.table(data.sp.strs, file = paste(path,"Table03.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+  data.sp.strs   <-  read.csv(paste(path,'Table03.csv',sep=''), header=T)
+     
+  data.sp.strs1 <- data.sp.strs[,c(-1,-3,-4,-9)] 
+  data.sp.strs1$Summary_sp    <- cleanf(data.sp.strs1$Summary_sp)  #use the remove duplicates function
+  data.sp.strs1$Total_weight  <- formatC(data.sp.strs1$Total_weight, format="d", big.mark=",") 
+  data.sp.strs1$Total_weight  <- gsub("NA", "", data.sp.strs1$Total_weight)
+  data.sp.strs1$Common_Name   <- gsub("Rougheye/blackspotted rockfish complex","Rougheye/blackspotted rockfish",data.sp.strs1$Common_Name)
+  data.sp.strs1$Scientific_Name  <- gsub("SEBASTES ALEUTIANUS","SEBASTES ALEUTIANUS/MELANOSTICTUS", data.sp.strs1$Scientific_Name)  
+  colnames(data.sp.strs1)     <- c( "Category", "Common Name", "Scientific Name" , "Count", "Weight(kg)")
+  
+  kableExtra::kable(data.sp.strs1,
+                    align = c("l","l","l","c","l"),
+                    booktabs = TRUE,   linesep = "",
+                    longtable = T,
+                    format = "latex",  caption = "(ref:Table3Caption)") %>%
+                    row_spec(0,    bold = T) %>%
+                    row_spec(10,   hline_after = T) %>%
+                    row_spec(23,   hline_after = T) %>%
+                    row_spec(27,   hline_after = T) %>%
+                    column_spec(1, width  = "2.7cm") %>%
+                    column_spec(2, width  = "4.0cm") %>%
+                    column_spec(3, width  = "4.9cm") %>%
+                    column_spec(4, width  = "1.0cm") %>%
+                    column_spec(5, width  = "1.3cm") %>%  
+
+    kableExtra::kable_styling(font_size = 8, 
+                     position = "left", 
+                     latex_options = "repeat_header",
+                     repeat_header_text = "continued.", 
+                     repeat_header_method = "replace")  
+```
+\ \
+\ \
+(ref:Table4Caption) Summary of species captured during the `r yr` survey standardized sets at offshore indexing localities.
+\ \
+\ \
+
+```{r Table4,  echo=FALSE}
+
+  options(knitr.kable.NA = '')
+  data.species   <- paste("exec procRReport_SpeciesSummary ", yr," ,'OFFSHORE STANDARDIZED'",sep="")
+  #data.sp.strs  <- GetSQLData(data.species,"Sablefish")
+  #write.table(data.sp.strs, file = paste(path,"Table04.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+  data.sp.strs   <-  read.csv(paste(path,'Table04.csv',sep=''), header=T)
+     
+  data.sp.strs1                 <- data.sp.strs[,c(-1,-3,-4,-9)] 
+  data.sp.strs1$Summary_sp      <- cleanf(data.sp.strs1$Summary_sp)  #use the remove duplicates function
+  data.sp.strs1$Total_weight    <- formatC(data.sp.strs1$Total_weight, format="d", big.mark=",") 
+  data.sp.strs1$Total_weight    <- gsub("NA", "", data.sp.strs1$Total_weight)
+  data.sp.strs1$Common_Name     <- gsub("Rougheye/blackspotted rockfish complex","Rougheye/blackspotted rockfish",data.sp.strs1$Common_Name)
+  data.sp.strs1$Scientific_Name <- gsub("SEBASTES ALEUTIANUS","SEBASTES ALEUTIANUS/MELANOSTICTUS", data.sp.strs1$Scientific_Name)
+  colnames(data.sp.strs1)       <- c( "Category", "Common Name", "Scientific Name" , "Count", "Weight(kg)")
+  
+  kableExtra::kable(data.sp.strs1,
+                    align = c("l","l","l","c","l"),
+                    booktabs = TRUE,   linesep = "",
+                    longtable = T,
+                    format = "latex",  caption = "(ref:Table4Caption)") %>%
+                    row_spec(0,   bold = T) %>%
+                    row_spec(9,   hline_after = T) %>%
+                    row_spec(17,  hline_after = T) %>%
+                    row_spec(21,  hline_after = T) %>%
+                    column_spec(1, width  = "2.7cm") %>%
+                    column_spec(2, width  = "4.0cm") %>%
+                    column_spec(3, width  = "4.9cm") %>%
+                    column_spec(4, width  = "1.0cm") %>%
+                    column_spec(5, width  = "1.3cm") %>%        
+
+    kableExtra::kable_styling( font_size = 8, 
+                      position = "left", 
+                      latex_options = "repeat_header",
+                      repeat_header_text = "continued.", 
+                      repeat_header_method = "replace")  
+```
+\ \
+(ref:Table5Caption) Summary of species captured during the `r yr` survey standardized sets at mainland inlet localities.
+\ \
+\ \
+
+```{r Table5, echo=FALSE}
+
+  options(knitr.kable.NA = '')
+  data.species   <- paste("exec procRReport_SpeciesSummary ",yr," ,'INLET STANDARDIZED'",sep="")
+  #data.sp.inlet  <- GetSQLData(data.species,"Sablefish")
+  #write.table(data.sp.inlet, file = paste(path,"Table05.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+  data.sp.inlet   <-  read.csv(paste(path,'Table05.csv',sep=''), header=T)
+  
+  data.sp.inlet1        <- data.sp.inlet[,c(-1,-3,-4,-9)] 
+  data.sp.inlet1$Summary_sp <- cleanf(data.sp.inlet1$Summary_sp)  #use the remove duplicates function
+  data.sp.inlet1$Total_weight   <- formatC(data.sp.inlet1$Total_weight, format="d", big.mark=",")
+  data.sp.inlet1$Total_weight   <- gsub("NA", "", data.sp.inlet1$Total_weight)
+  data.sp.inlet1$Common_Name    <- gsub("Rougheye/blackspotted rockfish complex","Rougheye/blackspotted rockfish",data.sp.inlet1$Common_Name)
+  data.sp.inlet1$Scientific_Name<- gsub("SEBASTES ALEUTIANUS","SEBASTES ALEUTIANUS/MELANOSTICTUS", data.sp.inlet1$Scientific_Name)
+  colnames(data.sp.inlet1)      <- c( "Category", "Common Name", "Scientific Name" , "Count", "Weight(kg)")
+  
+  kableExtra::kable(data.sp.inlet1,
+                    align = c("l","l","l","c","l"),
+                    booktabs = TRUE,linesep = "",
+                    format = "latex",  caption = "(ref:Table5Caption)") %>%
+                    row_spec(0,    bold = T) %>%
+                    row_spec(7,    hline_after = T) %>%
+                    row_spec(10,    hline_after = T) %>%
+                    row_spec(13,   hline_after = T) %>%
+                    column_spec(1, width  = "2.7cm") %>%
+                    column_spec(2, width  = "4.0cm") %>%
+                    column_spec(3, width  = "4.9cm") %>%
+                    column_spec(4, width  = "1.0cm") %>%
+                    column_spec(5, width  = "1.3cm") %>% 
+    
+    kableExtra::kable_styling(font_size = 8, position = "left",latex_options = "hold_position")  
+
+```
+\ \
+(ref:Table6Caption) Summary of species captured during the `r yr` survey exploratory sets near Porcher Peninsula and Goshen Island.
+\ \
+\ \
+
+```{r Table6, echo=FALSE}
+
+  options(knitr.kable.NA = '')
+  dtSP   <- paste("exec procRReport_SpeciesSummary ",yr," ,'NO SET TYPE'",sep="")
+  #datSP  <- GetSQLData(dtSP,"Sablefish")
+  #write.table(datSP, file = paste(path,"Table06.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+  data.sp.explore   <-  read.csv(paste(path,'Table06.csv',sep=''), header=T)
+  
+  data.sp.explore2 <- data.sp.explore[,c(-1,-3,-4,-9)] 
+  data.sp.explore2$Summary_sp    <- cleanf(data.sp.explore$Summary_sp)  #use the remove duplicates function
+  data.sp.explore2$Total_weight  <- formatC(data.sp.explore2$Total_weight, format="d", big.mark=",") 
+  data.sp.explore2$Total_weight  <- gsub("NA", "", data.sp.explore2$Total_weight)  
+  data.sp.explore2$Common_Name   <- gsub("Rougheye/blackspotted rockfish complex","Rougheye/blackspotted rockfish",data.sp.explore2$Common_Name)
+  data.sp.explore2$Scientific_Name  <- gsub("SEBASTES ALEUTIANUS","SEBASTES ALEUTIANUS/MELANOSTICTUS", data.sp.explore2$Scientific_Name)
+  colnames(data.sp.explore2)     <- c( "Category", "Common Name", "Scientific Name" , "Count", "Weight(kg)")
+
+  kableExtra::kable(data.sp.explore2,
+                    align = c("l","l","l","c","l"),
+                    booktabs = TRUE,
+                    linesep = "",
+                    format = "latex",  caption = "(ref:Table6Caption)") %>%
+                    row_spec(0,  bold = T) %>%
+                    row_spec(2,  hline_after = T) %>%
+                    row_spec(3,  hline_after = T) %>%
+                    #row_spec(13,  hline_after = T) %>%
+                    column_spec(1, width  = "2.7cm") %>%
+                    column_spec(2, width  = "4.0cm") %>%
+                    column_spec(3, width  = "4.9cm") %>%
+                    column_spec(4, width  = "1.0cm") %>%
+                    column_spec(5, width  = "1.3cm") %>% 
+    
+  kableExtra::kable_styling(font_size = 8, position = "left",latex_options = "hold_position") 
+
+```
+\clearpage
+
+(ref:Table7Caption) Summary of species captured during the `r yr+1` survey StRS sets conducted by the `r boat2`. Trace amounts are assigned code 'tr'.
+\ \
+\ \
+
+```{r Table7,  echo=FALSE}
+
+  options(knitr.kable.NA = '')
+  data.species    <- paste("exec procRReport_SpeciesSummary ", yr+1," ,'StRS'",sep="")
+  #data.sp.strs   <- GetSQLData(data.species,"Sablefish")
+  #write.table(data.sp.strs, file = paste(path,"Table07.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+  data.sp.strs    <-  read.csv(paste(path,'Table07.csv',sep=''), header=T)  # added 'tr' to csv by hand
+  
+  data.sp.strs2                <- data.sp.strs[,c(-1,-3,-4,-9)] 
+  data.sp.strs2$Summary_sp     <- cleanf(data.sp.strs2$Summary_sp)  #use the remove duplicates function
+  data.sp.strs2$Total_weight   <- formatC(data.sp.strs2$Total_weight, format="d", big.mark=",") 
+  data.sp.strs2$Total_weight   <- gsub("NA", "", data.sp.strs2$Total_weight)
+  data.sp.strs2$Common_Name    <- gsub("Rougheye/blackspotted rockfish complex","Rougheye/blackspotted rockfish",data.sp.strs2$Common_Name)
+  data.sp.strs2$Scientific_Name<- gsub("SEBASTES ALEUTIANUS","SEBASTES ALEUTIANUS/MELANOSTICTUS", data.sp.strs2$Scientific_Name)
+  colnames(data.sp.strs2)      <- c( "Category", "Common Name", "Scientific Name" , "Count", "Weight(kg)")
+
+  kableExtra::kable(data.sp.strs2,
+                    align = c("l","l","l","c","l"),
+                    booktabs = TRUE, 
+                    linesep = "",
+                    longtable = T,
+                    format = "latex",  caption = "(ref:Table7Caption)") %>%
+                    row_spec(0,    bold = T) %>%
+                    row_spec(14,  hline_after = T) %>%
+                    row_spec(28,  hline_after = T) %>%
+                    row_spec(32,  hline_after = T) %>%
+                    column_spec(1, width  = "2.7cm") %>%
+                    column_spec(2, width  = "4.0cm") %>%
+                    column_spec(3, width  = "4.9cm") %>%
+                    column_spec(4, width  = "1.0cm") %>%
+                    column_spec(5, width  = "1.3cm") %>% 
+    
+  kableExtra::kable_styling(font_size = 8, 
+                    position = "left", 
+                    latex_options = "repeat_header",
+                    repeat_header_text = "continued.", 
+                    repeat_header_method = "replace")  
+```
+\ \
+\ \
+(ref:Table8Caption) Summary of species captured during the `r yr+1` survey standardized sets at offshore indexing localities.  Trace amounts are assigned code 'tr'.
+\ \
+\ \
+
+```{r Table8,  echo=FALSE}
+
+  options(knitr.kable.NA = '')
+  data.species   <- paste("exec procRReport_SpeciesSummary ", yr+1," ,'OFFSHORE STANDARDIZED'",sep="")
+  #data.sp.strs  <- GetSQLData(data.species,"Sablefish")
+  #write.table(data.sp.strs, file = paste(path,"Table08.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+  data.sp.strs   <-  read.csv(paste(path,'Table08.csv',sep=''), header=T) # added 'tr' to csv by hand
+     
+  data.sp.strs1 <- data.sp.strs[,c(-1,-3,-4,-9)] 
+  data.sp.strs1$Summary_sp    <- cleanf(data.sp.strs1$Summary_sp)  #use the remove duplicates function
+  data.sp.strs1$Total_weight  <- formatC(data.sp.strs1$Total_weight, format="d", big.mark=",") 
+  data.sp.strs1$Total_weight  <- gsub("NA", "", data.sp.strs1$Total_weight)
+  data.sp.strs1$Common_Name   <- gsub("Rougheye/blackspotted rockfish complex","Rougheye/blackspotted rockfish",data.sp.strs1$Common_Name)
+  data.sp.strs1$Scientific_Name  <- gsub("SEBASTES ALEUTIANUS","SEBASTES ALEUTIANUS/MELANOSTICTUS", data.sp.strs1$Scientific_Name)
+  colnames(data.sp.strs1)     <- c( "Category", "Common Name", "Scientific Name" , "Count", "Weight(kg)")
+  
+  kableExtra::kable(data.sp.strs1,
+                    align = c("l","l","l","c","l"),
+                    booktabs = TRUE,   linesep = "",
+                    longtable = T,
+                    format = "latex",  caption = "(ref:Table8Caption)") %>%
+                    row_spec(0,   bold = T) %>%
+                    row_spec(9,  hline_after = T) %>%
+                    row_spec(15,  hline_after = T) %>%
+                    row_spec(18,  hline_after = T) %>%
+                    row_spec(51,  hline_after = T) %>%
+                    column_spec(1, width  = "2.7cm") %>%
+                    column_spec(2, width  = "4.0cm") %>%
+                    column_spec(3, width  = "4.9cm") %>%
+                    column_spec(4, width  = "1.0cm") %>%
+                    column_spec(5, width  = "1.3cm") %>%    
+
+    kableExtra::kable_styling( font_size = 8, 
+                      position = "left", 
+                      latex_options = "repeat_header",
+                      repeat_header_text = "continued.", 
+                      repeat_header_method = "replace")  
+```
+\ \
+\ \
+(ref:Table9Caption) Summary of species captured during the `r yr + 1`  survey standardized sets at mainland inlet localities.
+\ \
+\ \
+
+```{r Table9, echo=FALSE}
+
+  options(knitr.kable.NA = '')
+  dtSP   <- paste("exec procRReport_SpeciesSummary ",yr+1," ,'INLET STANDARDIZED'",sep="")
+  #datSP  <- GetSQLData(dtSP,"Sablefish")
+  #write.table(datSP, file = paste(path,"Table09.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+  data.sp.inlet   <-  read.csv(paste(path,'Table09.csv',sep=''), header=T)
+  
+  data.sp.inlet2 <- data.sp.inlet[,c(-1,-3,-4,-9)] 
+  data.sp.inlet2$Summary_sp <- cleanf(data.sp.inlet$Summary_sp)  #use the remove duplicates function
+  data.sp.inlet2$Total_weight  <- formatC(data.sp.inlet2$Total_weight, format="d", big.mark=",") 
+  data.sp.inlet2$Total_weight  <- gsub("NA", "", data.sp.inlet2$Total_weight)
+  data.sp.inlet2$Common_Name   <- gsub("Rougheye/blackspotted rockfish complex","Rougheye/blackspotted rockfish",data.sp.inlet2$Common_Name)
+  data.sp.inlet2$Scientific_Name  <- gsub("SEBASTES ALEUTIANUS","SEBASTES ALEUTIANUS/MELANOSTICTUS", data.sp.inlet2$Scientific_Name)
+  colnames(data.sp.inlet2)  <- c( "Category", "Common Name", "Scientific Name" , "Count", "Weight(kg)")
+
+  kableExtra::kable(data.sp.inlet2,
+                    align = c("l","l","l","c","l"),
+                    booktabs = TRUE,linesep = "",
+                    format = "latex",  caption = "(ref:Table9Caption)") %>%
+                    row_spec(0,  bold = T) %>%
+                    row_spec(5,  hline_after = T) %>%
+                    row_spec(7,  hline_after = T) %>%
+                    row_spec(10,  hline_after = T) %>%
+                    column_spec(1, width  = "2.7cm") %>%
+                    column_spec(2, width  = "4.0cm") %>%
+                    column_spec(3, width  = "4.9cm") %>%
+                    column_spec(4, width  = "1.0cm") %>%
+                    column_spec(5, width  = "1.3cm") %>% 
+    
+        kableExtra::kable_styling(font_size = 8, position = "left",latex_options = "hold_position") 
+```
+\clearpage
+
+(ref:Table10Caption) Summary of sablefish biological data collected at the `r yr` stratified random survey sites.
+\ \
+\ \
+
+```{r Table10, echo=FALSE}
+
+    newdata$Spatial  <-  as.character(newdata$Spatial)
+    newdata[,2]      <-  as.character(newdata[,2]) 
+    #`%nin%`    <- Negate(`%in%`)  # opposite of %in%
+
+    newdata[1,1]    <- paste("S\\textsubscript{1}", sep="")
+    newdata[5,1]    <- paste("S\\textsubscript{2}", sep="")
+    newdata[9,1]    <- paste("S\\textsubscript{3}", sep="")   
+    newdata[13,1]   <- paste("S\\textsubscript{4}", sep="")  
+    newdata[17,1]   <- paste("S\\textsubscript{5}", sep="") 
+    newdata[1,2]    <- paste("RD\\textsubscript{1}", sep="")  
+    newdata[2,2]    <- paste("RD\\textsubscript{2}", sep="")    
+    newdata[3,2]    <- paste("RD\\textsubscript{3}", sep="") 
+    newdata[5,2]    <- paste("RD\\textsubscript{1}", sep="")  
+    newdata[6,2]    <- paste("RD\\textsubscript{2}", sep="")    
+    newdata[7,2]    <- paste("RD\\textsubscript{3}", sep="") 
+    newdata[9,2]    <- paste("RD\\textsubscript{1}", sep="")  
+    newdata[10,2]   <- paste("RD\\textsubscript{2}", sep="")    
+    newdata[11,2]   <- paste("RD\\textsubscript{3}", sep="") 
+    newdata[13,2]   <- paste("RD\\textsubscript{1}", sep="")  
+    newdata[14,2]   <- paste("RD\\textsubscript{2}", sep="")    
+    newdata[15,2]   <- paste("RD\\textsubscript{3}", sep="") 
+    newdata[17,2]   <- paste("RD\\textsubscript{1}", sep="")  
+    newdata[18,2]   <- paste("RD\\textsubscript{2}", sep="")    
+    newdata[19,2]   <- paste("RD\\textsubscript{3}", sep="") 
+    newdata[4,2]    <- 'Mean'    
+    newdata[8,2]    <- 'Mean' 
+    newdata[12,2]   <- 'Mean' 
+    newdata[16,2]   <- 'Mean' 
+    newdata[20,2]   <- 'Mean'       
+    
+    kableExtra::kable(newdata, row.names = FALSE, escape = F,  # escape = F allows the subscript text
+                      align = c("l","l","c","c","c","c","c"),
+                      booktabs = TRUE,   linesep = "",
+                      format = "latex",  caption = "(ref:Table10Caption)")%>% 
+      
+    add_header_above(c("Stratum"= 2, 
+                        "Proportion" = 2, 
+                        "Mean Fork Length (mm)" = 3),bold = T) %>% 
+      
+    kableExtra::kable_styling(font_size = 9, position = "left",latex_options = "hold_position") %>%
+                      row_spec(0,    bold = T) %>%
+                      row_spec(3,    hline_after = T) %>%
+                      row_spec(4,    bold = T, hline_after = T) %>%
+                      row_spec(7,    hline_after = T) %>% 
+                      row_spec(8,    bold = T, hline_after = T) %>%      
+                      row_spec(11,   hline_after = T) %>%
+                      row_spec(12,   bold = T, hline_after = T) %>%      
+                      row_spec(15,   hline_after = T)   %>% 
+                      row_spec(16,   bold = T, hline_after = T) %>%   
+                      row_spec(19,   hline_after = T)   %>%  
+                      row_spec(20,   bold = T) %>% 
+                      column_spec(1, width  = "2.0cm") %>%
+                      column_spec(2, width  = "2.0cm") %>%
+                      column_spec(3, width  = "1.2cm") %>%
+                      column_spec(4, width  = "1.2cm") %>%
+                      column_spec(5, width  = "1.2cm") %>%
+                      column_spec(6, width  = "1.2cm") %>%                  
+                      column_spec(7, width  = "1.2cm")
+```
+\ \
+\ \
+(ref:Table11Caption) Summary of sablefish biological data collected at `r yr` offshore indexing localities.
+\ \
+\ \
+
+```{r Table11, echo=FALSE}
+
+  options(knitr.kable.NA = '')
+  bio.summary       <- paste(" select Year, Locality, TRADITIONAL_OFFSHORE_INDEXING, Depth, PropMales, PropFemales, ",
+                             " MalesMnFkLen, FemalesMnFkLen from  dbo.GFBIO_SABLE_BIO_SUMMARY ",
+                             " where (Year = ", yr, ") AND (TRADITIONAL_OFFSHORE_INDEXING = 1) ",
+                             " order by Locality, Depth", sep="")
+  #bio.summary.trad  <- GetSQLData(bio.summary, "Sablefish")
+  #write.table(bio.summary.trad, file = paste(path,"Table11.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+  bio.summary.trad  <-  read.csv(paste(path,'Table11.csv',sep=''), header=T)
+  
+  bio.summary.trad          <-  bio.summary.trad[,c(-1,-3,-4)]  # remove some columns
+  bio.summary.trad$Locality <-  as.character(bio.summary.trad$Locality)   # convert to charaacter value
+  bio.summary.trad$order    <-  c(9,3,5,8,4,2,1,7,6)  # reorder Table
+  bio.summary.trad          <-  bio.summary.trad[order(bio.summary.trad$order),]  # reorder based on North to South localities
+  bio.means                 <-  c('Mean', 
+                                   round(mean(bio.summary.trad$PropMales),2),  
+                                   round(mean(bio.summary.trad$PropFemales),2),
+                                   round(mean(bio.summary.trad$MalesMnFkLen),0),  
+                                   round(mean(bio.summary.trad$FemalesMnFkLen),0),10)
+  bio.trad.summary          <-  rbind(bio.summary.trad, bio.means)  # add mean calculations
+  bio.trad.summary          <-  bio.trad.summary[,c(-6)]
+  colnames(bio.trad.summary)<-  c( "Offshore Indexing", "Males", "Females" , "Males", "Females") # new column names
+  
+  kableExtra::kable(bio.trad.summary, row.names = FALSE,
+                    booktabs = TRUE,   linesep = "",
+                    format = "latex",  
+                    caption = "(ref:Table11Caption)") %>%
+    
+  add_header_above( c("Locality"= 1,
+                      "Proportion" = 2, 
+                      "Mean Fork Length (mm)" = 2),bold = T) %>%
+      
+  kableExtra::kable_styling(font_size = 9, position = "left",latex_options = "hold_position") %>%
+                    row_spec(0,    bold = T) %>%
+                    row_spec(9,    hline_after = T)   %>%  # line after the 9 localities
+                    row_spec(10,   bold = T) %>%
+                    column_spec(1, width  = "4.8cm") %>%
+                    column_spec(2, width  = "1.2cm") %>%
+                    column_spec(3, width  = "1.2cm") %>%
+                    column_spec(4, width  = "1.2cm") %>%
+                    column_spec(5, width  = "1.2cm") 
+```
+\clearpage
+(ref:Table12Caption) Summary of sablefish biological data collected at the `r yr`  mainland inlet sites.
+\ \
+\ \
+
+```{r Table12, echo=FALSE}
+
+    bio.summaryI        <- paste(" select Locality, PropMales, PropFemales, ",
+                                 " MalesMnFkLen, FemalesMnFkLen, TaggedMnFkLen from  dbo.GFBIO_SABLE_BIO_SUMMARY ",
+                                 " where (Year = ", yr, ") AND (TRADITIONAL_INLET_LOCALITY = 1) ", 
+                                 " ORDER BY Locality DESC", sep="")
+    #bio.summary.inlet  <- GetSQLData(bio.summaryI, "Sablefish")
+    #write.table(bio.summary.inlet, file = paste(path,"Table12.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+    bio.summary.inlet   <-  read.csv(paste(path,'Table12.csv',sep=''), header=T)
+    
+    bio.summary.inlet$Locality  <-  as.character(bio.summary.inlet$Locality)
+    bio.means.line              <-  c('Mean', round(mean(bio.summary.inlet$PropMales),2),    
+                                       round(mean(bio.summary.inlet$PropFemales),2),
+                                       round(mean(bio.summary.inlet$MalesMnFkLen),0), 
+                                       round(mean(bio.summary.inlet$FemalesMnFkLen),0),
+                                       round(mean(bio.summary.inlet$TaggedMnFkLen),0) )
+    bio.summary.inlet           <-  rbind(bio.summary.inlet, bio.means.line)
+    colnames(bio.summary.inlet) <-  c( "Mainland Inlet", "Males", "Females" , "Males", "Females", "Tagged")# new column names
+                             
+    kableExtra::kable(bio.summary.inlet, row.names = FALSE,
+                      booktabs = TRUE,   linesep = "",
+                      format = "latex",  caption = "(ref:Table12Caption)") %>%
+      
+    add_header_above(c("Locality"= 1,
+                       "Proportion" = 2, 
+                       "Mean Fork Length (mm)" = 3), bold = T) %>%
+      
+    kableExtra::kable_styling(font_size = 9, position = "left",latex_options = "hold_position") %>%
+                      row_spec(0,    bold = T) %>%
+                      row_spec(4,    hline_after = T) %>%
+                      row_spec(5,    bold = T) %>%
+                      column_spec(1, width  = "4.8cm") %>%
+                      column_spec(2, width  = "1.2cm") %>%
+                      column_spec(3, width  = "1.2cm") %>%
+                      column_spec(4, width  = "1.2cm") %>%
+                      column_spec(5, width  = "1.2cm") %>%
+                      column_spec(6, width  = "1.2cm") 
+  
+```
+
+\ \
+\ \
+(ref:Table13Caption) Summary of sablefish biological data collected at `r yr+1` stratified random survey sites.
+\ \
+\ \
+
+```{r Table13, echo=FALSE}
+
+    newdata.2$Spatial <-  as.character(newdata.2$Spatial)
+    newdata.2[,2]     <-  as.character(newdata.2[,2])
+
+    newdata.2[1,1]    <- paste("S\\textsubscript{1}" , sep="")
+    newdata.2[5,1]    <- paste("S\\textsubscript{2}" , sep="")
+    newdata.2[9,1]    <- paste("S\\textsubscript{3}" , sep="")   
+    newdata.2[13,1]   <- paste("S\\textsubscript{4}" , sep="")  
+    newdata.2[17,1]   <- paste("S\\textsubscript{5}" , sep="") 
+    newdata.2[1,2]    <- paste("RD\\textsubscript{1}", sep="")  
+    newdata.2[2,2]    <- paste("RD\\textsubscript{2}", sep="")    
+    newdata.2[3,2]    <- paste("RD\\textsubscript{3}", sep="") 
+    newdata.2[5,2]    <- paste("RD\\textsubscript{1}", sep="")  
+    newdata.2[6,2]    <- paste("RD\\textsubscript{2}", sep="")    
+    newdata.2[7,2]    <- paste("RD\\textsubscript{3}", sep="") 
+    newdata.2[9,2]    <- paste("RD\\textsubscript{1}", sep="")  
+    newdata.2[10,2]   <- paste("RD\\textsubscript{2}", sep="")    
+    newdata.2[11,2]   <- paste("RD\\textsubscript{3}", sep="")
+    newdata.2[13,2]   <- paste("RD\\textsubscript{1}", sep="")  
+    newdata.2[14,2]   <- paste("RD\\textsubscript{2}", sep="")    
+    newdata.2[15,2]   <- paste("RD\\textsubscript{3}", sep="") 
+    newdata.2[17,2]   <- paste("RD\\textsubscript{1}", sep="")  
+    newdata.2[18,2]   <- paste("RD\\textsubscript{2}", sep="")    
+    newdata.2[19,2]   <- paste("RD\\textsubscript{3}", sep="") 
+    newdata.2[4,2]    <- 'Mean'    
+    newdata.2[8,2]    <- 'Mean' 
+    newdata.2[12,2]   <- 'Mean' 
+    newdata.2[16,2]   <- 'Mean' 
+    newdata.2[20,2]   <- 'Mean'
+
+    
+    kableExtra::kable(newdata.2,row.names = FALSE,escape = F,  # escape = F allows the subscript text
+                      align = c("l","l","c","c","c","c","c"),
+                      booktabs = TRUE,linesep = "",
+                      format = "latex",  caption = "(ref:Table13Caption)") %>% 
+      
+    add_header_above( c("Stratum"= 2,
+                        "Proportion" = 2, 
+                        "Mean Fork Length (mm)" = 3), bold=T) %>%
+      
+    kableExtra::kable_styling(font_size = 9, position = "left",latex_options = "hold_position") %>%
+                      row_spec(0,    bold = T) %>%
+                      row_spec(3,    hline_after = T) %>%
+                      row_spec(4,    bold = T, hline_after = T) %>%
+                      row_spec(7,    hline_after = T) %>% 
+                      row_spec(8,    bold = T, hline_after = T) %>%      
+                      row_spec(11,   hline_after = T) %>%
+                      row_spec(12,   bold = T, hline_after = T) %>%      
+                      row_spec(15,   hline_after = T)   %>% 
+                      row_spec(16,   bold = T, hline_after = T) %>%   
+                      row_spec(19,   hline_after = T)  %>% 
+                      row_spec(20,   bold = T) %>%  
+                      column_spec(1, width  = "2.0cm") %>%
+                      column_spec(2, width  = "2.0cm") %>%
+                      column_spec(3, width  = "1.2cm") %>%
+                      column_spec(4, width  = "1.2cm") %>%
+                      column_spec(5, width  = "1.2cm") %>%
+                      column_spec(6, width  = "1.2cm") %>%                  
+                      column_spec(7, width  = "1.2cm")
+    
+```
+
+\clearpage
+
+(ref:Table14Caption) Summary of sablefish biological data collected at `r yr+1` offshore indexing localities.
+\ \
+\ \
+
+```{r Table14, echo=FALSE}
+
+  options(knitr.kable.NA = '')
+  bio.summary       <- paste( "select Year, Locality, TRADITIONAL_OFFSHORE_INDEXING, ",
+                              "Depth, PropMales, PropFemales, ",
+                              "MalesMnFkLen, FemalesMnFkLen ",
+                              "from  dbo.GFBIO_SABLE_BIO_SUMMARY ",
+                              "where (Year = ", yr+1, ") AND (TRADITIONAL_OFFSHORE_INDEXING = 1) ",
+                              "order by Locality, Depth",sep="")
+  #bio.summary.trad  <- GetSQLData(bio.summary, "Sablefish")
+  #write.table(bio.summary.trad, file = paste(path,"Table14.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+  bio.summary.trad   <-  read.csv(paste(path,'Table14.csv',sep=''), header=T)
+  
+  bio.summary.trad          <-  bio.summary.trad[,c(-1,-3,-4)]  # remove some columns
+  bio.summary.trad$Locality <-  as.character(bio.summary.trad$Locality)   # convert to charaacter value
+  bio.summary.trad$order    <-  c(9,3,5,8,4,2,1,7,6)  
+  bio.summary.trad          <-  bio.summary.trad[order(bio.summary.trad$order),]  # reorder based on North to South localities
+  bio.means                 <-  c('Mean', 
+                                  round(mean(bio.summary.trad$PropMales),2),    
+                                  round(mean(bio.summary.trad$PropFemales),2),
+                                  round(mean(bio.summary.trad$MalesMnFkLen),0), 
+                                  round(mean(bio.summary.trad$FemalesMnFkLen),0),10)
+  bio.trad.summary          <-  rbind(bio.summary.trad, bio.means)
+  bio.trad.summary          <-  bio.trad.summary[,c(-6)]
+  colnames(bio.trad.summary)<- c( "Offshore Indexing", "Males", "Females" , "Males", "Females")
+  
+  kableExtra::kable(bio.trad.summary, row.names = FALSE,
+                    align = c("l","c","c","c","c"),
+                    booktabs = TRUE,   linesep = "",
+                    format = "latex",  caption = "(ref:Table14Caption)") %>% 
+    
+  add_header_above( c("Locality"= 1,
+                      "Proportion" = 2, 
+                      "Mean Fork Length (mm)" = 2), bold = T) %>%
+      
+  kableExtra::kable_styling(font_size = 9, position = "left",latex_options = "hold_position") %>%
+                    row_spec(0,  bold = T) %>%
+                    row_spec(9,  hline_after = T)   %>%  # line after the 9 localities
+                    row_spec(10, bold = T) %>%
+                    column_spec(1, width  = "4.8cm") %>%
+                    column_spec(2, width  = "1.2cm") %>%
+                    column_spec(3, width  = "1.2cm") %>%
+                    column_spec(4, width  = "1.2cm") %>%
+                    column_spec(5, width  = "1.2cm") 
+  
+```
+\ \
+\ \
+(ref:Table15Caption) Summary of sablefish biological data collected at `r yr+1`  mainland inlet sites.
+\ \
+\ \
+
+```{r Table15, echo=FALSE}
+
+    bio.summaryI2        <-  paste(" select Locality, PropMales, PropFemales, ",
+                                   " MalesMnFkLen, FemalesMnFkLen, TaggedMnFkLen from  dbo.GFBIO_SABLE_BIO_SUMMARY ",
+                                   " where (Year = ", yr + 1, ") AND (TRADITIONAL_INLET_LOCALITY = 1)  ",
+                                   " ORDER BY Locality DESC", sep="")
+    #bio.summary.inlet2   <-  GetSQLData(bio.summaryI2, "Sablefish")
+    #write.table(bio.summary.inlet2, file = paste(path,"Table15.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+    bio.summary.inlet2   <-  read.csv(paste(path,'Table15.csv',sep=''), header=T)
+    
+    bio.summary.inlet2$Locality <-  as.character(bio.summary.inlet2$Locality) # change to character column
+    bio.means.line2             <-  c('Mean', 
+                                       round(mean(bio.summary.inlet2$PropMales),2),    
+                                       round(mean(bio.summary.inlet2$PropFemales),2),
+                                       round(mean(bio.summary.inlet2$MalesMnFkLen),0), 
+                                       round(mean(bio.summary.inlet2$FemalesMnFkLen),0),
+                                       round(mean(bio.summary.inlet2$TaggedMnFkLen),0) )
+    bio.summary.inlet2          <-  rbind(bio.summary.inlet2, bio.means.line2)
+    colnames(bio.summary.inlet2)<-  c( "Mainland Inlet", "Males", "Females" , "Males", "Females", "Tagged")# new column names
+                             
+    kableExtra::kable(bio.summary.inlet2, row.names = FALSE,
+                      booktabs = TRUE,   linesep = "",
+                      format = "latex",  caption = "(ref:Table15Caption)") %>% 
+      
+    add_header_above(c("Locality"= 1,
+                       "Proportion" = 2, 
+                       "Mean Fork Length (mm)" = 3),bold = T) %>%
+      
+    kableExtra::kable_styling(font_size = 9, position = "left",latex_options = "hold_position") %>%
+                      row_spec(0,    bold = T) %>%
+                      row_spec(4,    hline_after = T) %>%
+                      row_spec(5,    bold = T) %>%
+                      column_spec(1, width  = "4.8cm") %>%
+                      column_spec(2, width  = "1.2cm") %>%
+                      column_spec(3, width  = "1.2cm") %>%
+                      column_spec(4, width  = "1.2cm") %>%
+                      column_spec(5, width  = "1.2cm") %>%
+                      column_spec(6, width  = "1.2cm") 
+    
+```
+
+\clearpage
+
+(ref:Table16Caption) Count of tagged fish released since 1991 (including re-released fish) and counts of verified tag recoveries by year including any recoveries that had no reported year. The total count of tag recoveries represent the sum of all verified recoveries.
+\ \
+\ \
+
+```{r Table16,  echo=FALSE}
+
+  # Table FishTag.dbo.WEB_TAG_REVIEW is created in procedure FishTag.dbo.Procedure5_Build_WebData
+  # each year must be added
+  dtBW     <-  paste( "select [Release year] as [Year], Total_released as [Release], ",
+                      "Rec_1991 as [91], Rec_1992 as [92], Rec_1993 as [93], ",
+                      "Rec_1994 as [94], Rec_1995 as [95], Rec_1996 as [96], ",
+                      "Rec_1997 as [97], Rec_1998 as [98], Rec_1999 as [99], ",
+                      "Rec_2000 as [00], Rec_2001 as [01], Rec_2002 as [02], ",
+                      "Rec_2003 as [03], Rec_2004 as [04], Rec_2005 as [05], ",
+                      "Rec_2006 as [06], Rec_2007 as [07], Rec_2008 as [08], ",
+                      "Rec_2009 as [09], ",
+                      "Total_recovered as [Total], No_recovery_year as [No Year] ",
+                      "from dbo.WEB_TAG_REVIEW order by [Release year]",sep="")
+   #datag  <-  GetSQLData(dtBW,"FishTag")
+   #write.table(datag, file = paste(path,"Table16.csv", sep=''), row.names=FALSE, na="",col.names=TRUE,  sep=",")  
+   datag   <-  read.csv(paste(path,'Table16.csv',sep=''), header=T)
+   
+   datag               <- datag[datag$Year <= yr+1,]
+   datag$newTotal      <- rowSums(datag)
+   datag$correctTotal  <- datag$newTotal-datag$Total - datag$No.Year - datag$Release- datag$Year
+   datag               <- datag[,c(-22,-24)]
+   datag               <- datag[, c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,23,22)] 
+   
+   datag$Release       <- formatC(datag$Release, format="d", big.mark=",") # separate numbers with commas  
+   datag$correctTotal  <- formatC(datag$correctTotal, format="d", big.mark=",")
+   datag$X96           <- formatC(datag$X96, format="d", big.mark=",")
+   datag$X97           <- formatC(datag$X97, format="d", big.mark=",")  
+   datag$X98           <- formatC(datag$X98, format="d", big.mark=",")
+   datag$X99           <- formatC(datag$X99, format="d", big.mark=",")
+   datag$X00           <- formatC(datag$X00, format="d", big.mark=",") 
+   datag$X01           <- formatC(datag$X01, format="d", big.mark=",")
+   datag$X02           <- formatC(datag$X02, format="d", big.mark=",")  
+   datag$X03           <- formatC(datag$X03, format="d", big.mark=",")
+   datag$X04           <- formatC(datag$X04, format="d", big.mark=",")
+   datag$X05           <- formatC(datag$X05, format="d", big.mark=",") 
+   datag$X06           <- formatC(datag$X06, format="d", big.mark=",")  
+   datag$X07           <- formatC(datag$X07, format="d", big.mark=",")  
+   datag$X08           <- formatC(datag$X08, format="d", big.mark=",")  
+   datag$X09           <- formatC(datag$X09, format="d", big.mark=",")
+   
+   names(datag)[2]     <-  "Released"
+   names(datag)[3]     <-  "91"
+   names(datag)[4]     <-  "92"
+   names(datag)[5]     <-  "93"   
+   names(datag)[6]     <-  "94"
+   names(datag)[7]     <-  "95"
+   names(datag)[8]     <-  "96"
+   names(datag)[9]     <-  "97"
+   names(datag)[10]    <-  "98"
+   names(datag)[11]    <-  "99"
+   names(datag)[12]    <-  "00" 
+   names(datag)[13]    <-  "01"
+   names(datag)[14]    <-  "02" 
+   names(datag)[15]    <-  "03"
+   names(datag)[16]    <-  "04" 
+   names(datag)[17]    <-  "05"
+   names(datag)[18]    <-  "06" 
+   names(datag)[19]    <-  "07"
+   names(datag)[20]    <-  "08" 
+   names(datag)[21]    <-  "09"
+   names(datag)[22]    <-  "Total" 
+   names(datag)[23]    <-  "No year"    
+   
+   csasdown::csas_table(datag, longtable = T,
+                        format = "latex",  
+                        landscape= TRUE,
+                        repeat_header_text = "Continued...", 
+                        caption = "(ref:Table16Caption)") %>%
+    
+   kableExtra::kable_styling(font_size = 9, position = "left", latex_options = "hold_position") %>%
+                      column_spec(1,width  = "0.6cm") %>%
+                      column_spec(2,width  = "0.9cm") %>%
+                      column_spec(3,width  = "0.5cm") %>%
+                      column_spec(4,width  = "0.4cm") %>%
+                      column_spec(5,width  = "0.4cm") %>%  
+                      column_spec(6,width  = "0.5cm") %>% 
+                      column_spec(7,width  = "0.5cm") %>% 
+                      column_spec(8,width  = "0.5cm") %>% 
+                      column_spec(9,width  = "0.5cm") %>% 
+                      column_spec(10,width = "0.5cm") %>% 
+                      column_spec(11,width = "0.5cm") %>% 
+                      column_spec(12,width = "0.5cm") %>% 
+                      column_spec(13,width = "0.5cm") %>%
+                      column_spec(14,width = "0.5cm") %>%
+                      column_spec(15,width = "0.5cm") %>%
+                      column_spec(16,width = "0.5cm") %>%
+                      column_spec(17,width = "0.5cm") %>%
+                      column_spec(18,width = "0.5cm") %>%
+                      column_spec(19,width = "0.5cm") %>%
+                      column_spec(20,width = "0.5cm") %>%     
+                      column_spec(21,width = "0.5cm") %>%     
+                      column_spec(22,width = "0.6cm") %>%     
+                      column_spec(23,width = "0.6cm") 
+``` 

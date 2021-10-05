@@ -1,0 +1,1072 @@
+# Figures
+
+(ref:figure1) Location of the boundaries of the offshore indexing localities, mainland inlet localities, exploratory sites (2008) and the five spatial areas (S~1~-S~5~) of the stratified random survey design. The three depths strata (RD~1~-RD~3~) are colour-coded and nested within each of the five spatial strata. 
+
+```{r figure1, fig.cap='(ref:figure1)', warning=FALSE, echo=FALSE, dpi=550, out.width = "400px", out.height = "517px", fig.align="center"}
+      img <- paste(figpath,'Figure1.png',sep="") 
+      knitr::include_graphics(img)
+```
+\clearpage
+
+(ref:figure2)  Start locations of the `r yr` StRS sets (red markers) conducted in spatial stratum areas S~1~ through S~5~, standardized sets (yellow markers) conducted at offshore indexing localities, and two exploratory sets (purple markers). 
+
+```{r figure2, fig.cap='(ref:figure2)', out.width = "430px", out.height = "556px", fig.align="center", warning=FALSE, echo=FALSE, message=FALSE, error=FALSE}
+      img <- paste(figpath,'Figure2.png'  ,sep="")
+      knitr::include_graphics(img)
+```
+\clearpage
+
+(ref:figure3)  Start locations of the `r yr+1` StRS sets (red markers) conducted in spatial stratum areas S~1~ through S~5~ and standardized sets (yellow markers) conducted at offshore indexing localities.
+
+```{r figure3, fig.cap='(ref:figure3)', out.width = "430px", out.height = "556px", fig.align="center", warning=FALSE, echo=FALSE, message=FALSE, error=FALSE}
+      img <- paste(figpath,'Figure3.png'  ,sep="")
+      knitr::include_graphics(img)
+```
+\clearpage
+
+(ref:figure4) Location of the `r yr` and `r yr+1` standardized set tracklines within mainland inlet localities.  
+```{r figure4, fig.cap='(ref:figure4)', out.width = "420px", out.height = "556px", echo=FALSE, fig.align="center", warning=FALSE}
+      img <- paste(figpath,'Figure4.png'  ,sep="")
+      knitr::include_graphics(img)
+```
+\clearpage
+
+(ref:figure5)  Image of the 35.66 meter F/V `r boat1`  used for the `r yr` and `r yr+1` sablefish research and assessment surveys. Photo credit: `r boat1` Facebook page.
+
+```{r figure5, fig.cap='(ref:figure5)', out.width = "480px", out.height = "360px", echo=FALSE, fig.align="center", warning=FALSE}
+      img <- paste(figpath,'Figure5.png'  ,sep="")
+      knitr::include_graphics(img)
+```
+\clearpage
+
+(ref:figure6) Trap gear elements consisting of 25 baited traps snapped to beckets along a groundline (A).  Trap elements (B).
+
+```{r figure6, fig.cap='(ref:figure6)', out.width = "400px", echo=FALSE, fig.align="center", warning=FALSE}
+      img <- paste(figpath,'Figure6.png'  ,sep="")
+      knitr::include_graphics(img)
+```
+\clearpage
+
+(ref:figure7) Average sablefish catch per unit effort (CPUE; mean +/- 95% CIs) by StRS survey strata since 2003. Panels run deep to shallow (left to right) and north to south (top to bottom).
+
+```{r figure7, fig.cap='(ref:figure7)', out.width = "450px", out.height = "576px",echo=FALSE, fig.align="center", warning=FALSE}
+
+     png(paste(figpath,'figure7.png',sep=''), width=560, height=681) # write png to file
+     par(mfcol=c(1,1)) 
+     
+     landmrk <- paste("select * from OM_RawLandmarkSurveyData", sep="")
+     #raw_survey_data<- GetSQLData(landmrk,"Sablefish")
+     #write.table(raw_survey_data, file = paste(path,"figure7.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+     raw_survey_data <- read.csv(paste(path,'figure7.csv',sep=''),header=T)
+     
+     strs            <- subset(raw_survey_data,SABLE_SET_TYPE=="StRS")           # subset on StRS sets
+     strs            <- strs[strs$SET_YEAR >1993 & strs$SET_YEAR <= yr+1,] 
+     
+     strs$sable_cpue <- strs$CPUE_SABLE_WEIGHT/strs$CPUE_TRAPS               # wt/trap, changed from TOTAL_TRAPS to CPUE_TRAPS
+     strs$strata     <- paste(strs$SABLE_AREA_GROUP,strs$SABLE_DEPTH_GROUP)  # area + depth strata
+    
+     strs2 <- arrange(transform(strs,strata=factor(strata,levels=rev(unique(strs$strata)))),strata)
+     tgc   <- summarySE(strs2, measurevar=("sable_cpue"),    groupvars=c("SET_YEAR","strata"),na.rm = T)
+     tgc   <- arrange(transform(tgc,strata=factor(strata,  levels = c("S5 RD3", "S5 RD2", "S5 RD1", 
+                                                                      "S4 RD3", "S4 RD2", "S4 RD1", 
+                                                                      "S3 RD3", "S3 RD2", "S3 RD1", 
+                                                                      "S2 RD3", "S2 RD2", "S2 RD1",
+                                                                      "S1 RD3", "S1 RD2", "S1 RD1" ))),strata)
+    
+     tgc$col <- ifelse(tgc$SET_YEAR %in% c(2008,2009), "red", "steelblue")
+
+     ggplot(tgc,aes(x=SET_YEAR,y=sable_cpue,label = round(sable_cpue,0))) +
+     geom_text(size = 4, vjust = 0, nudge_y = 4.5) + 
+     geom_errorbar(aes(ymin=sable_cpue-ci, ymax=sable_cpue+ci), width=0, col=tgc$col) +
+     geom_line(col=tgc$col) +
+     geom_point(col=tgc$col) +
+     facet_wrap(~strata,nrow=5)+
+     xlab("Year")+
+     ylab("Mean CPUE (kg/trap)") +
+     scale_x_continuous(breaks = integer_breaks()) +
+     theme(axis.text = element_text(size = 9)) +
+     theme(     panel.background =  element_rect(fill = "white",
+                                    colour = "grey50",
+                                    size = 0.5, linetype = "solid"),
+                panel.grid.major =  element_line(size = 0.5, linetype = 'solid',
+                                    colour = "grey90"), 
+                panel.grid.minor =  element_line(size = 0.25, linetype = 'solid',
+                                    colour = "grey90"),
+                strip.background =  element_rect(fill = "grey80", colour = "grey30"), 
+                plot.margin=unit(c(0.2,0.2,0.2,1),"cm")) 
+     
+  
+     while (!is.null(dev.list()))  dev.off()
+     img <-   paste(figpath,'figure7.png',sep='')   # -- retrieve png 
+              knitr::include_graphics(img)
+```
+\clearpage
+
+(ref:figure8) Average number of sablefish per trap (mean +/- 95% CIs) by StRS survey strata over time. Panels run deep to shallow (left to right) and north to south (top to bottom).
+
+```{r figure8, fig.cap='(ref:figure8)', out.width = "450px", out.height = "576px",echo=FALSE, fig.align="center", warning=FALSE}
+    
+    png(paste(figpath,'figure8.png', sep=''), width=560, height=681) # write png to file
+    par(mfcol=c(1,1))
+    raw_survey_data <- read.csv(paste(path,'figure7.csv',sep=''),header=T)
+    strs            <- subset(raw_survey_data,SABLE_SET_TYPE=="StRS") 
+    strs            <- strs[strs$SET_YEAR >1993 & strs$SET_YEAR <= yr+1,] 
+    strs$sable_cnt  <- (strs$CPUE_SABLE_COUNT/strs$CPUE_TRAPS)
+    strs$strata     <-  paste(strs$SABLE_AREA_GROUP,strs$SABLE_DEPTH_GROUP)
+ 
+    strs2 <- arrange(transform(strs, strata=factor(strata,levels=rev(unique(strs$strata)))),strata)
+    tgcnt <- summarySE(strs2, measurevar=("sable_cnt"), groupvars=c("SET_YEAR","strata"),na.rm = T)
+    tgcnt <- arrange(transform(tgcnt,strata=factor(strata,levels=c("S5 RD3", "S5 RD2", "S5 RD1", 
+                                                                   "S4 RD3", "S4 RD2", "S4 RD1", 
+                                                                   "S3 RD3", "S3 RD2", "S3 RD1", 
+                                                                   "S2 RD3", "S2 RD2", "S2 RD1",
+                                                                   "S1 RD3", "S1 RD2", "S1 RD1"))),strata)
+
+    tgcnt$col <- ifelse(tgcnt$SET_YEAR %in% c(2008,2009), "red", "steelblue")
+    ggplot(tgcnt,aes(x=SET_YEAR,y=sable_cnt, label= round(sable_cnt,0)) ) +
+      geom_text(size = 4, vjust = 0, nudge_y = 4.5) + 
+           geom_errorbar(aes(ymin=sable_cnt-ci, ymax=sable_cnt+ci), width=0, col=tgcnt$col) +
+           geom_line(col=tgcnt$col) +
+           geom_point(col=tgcnt$col) +
+           facet_wrap(~rev(strata),nrow=5,labeller = )+
+           coord_cartesian(ylim=c(0,60))+ 
+           xlab("Year")+
+           ylab("Mean CPUE (#fish/trap)")+
+           scale_x_continuous(breaks = integer_breaks()) +
+           theme(axis.text = element_text(size = 9)) +  
+     theme(panel.background = element_rect(fill = "white",
+                              colour = "grey50",
+                              size = 0.5, linetype = "solid"),
+           panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                              colour = "grey90"), 
+           panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                              colour = "grey90"),
+           strip.background = element_rect(fill = "grey80", colour = "grey30"), 
+           plot.margin=unit(c(0.2,0.2,0.2,1),"cm")) 
+    
+    while (!is.null(dev.list()))  dev.off()
+    img <- paste(figpath,'figure8.png',sep='')   # -- retrieve png 
+           knitr::include_graphics(img)
+    
+```
+\clearpage
+
+(ref:figure9) Average weight of sablefish (mean +/- 95% CIs) by survey strata over time. Panels run deep to shallow (left to right) and north to south (top to bottom).
+
+```{r figure9, fig.cap='(ref:figure9)', out.width = "450px", out.height = "576px",echo=FALSE, fig.align="center", warning=FALSE}
+
+    png(paste(figpath,'figure9.png',sep=''), width=560, height=681) # write png to file
+    par(mfcol=c(1,1))
+    raw_survey_data <- read.csv(paste(path,'figure7.csv',sep=''),header=T)
+    
+    strs                   <- subset(raw_survey_data,SABLE_SET_TYPE=="StRS") 
+    strs                   <- strs[strs$SET_YEAR >1993 & strs$SET_YEAR <= yr+1,]
+    strs$sable_cpue        <- strs$CPUE_SABLE_WEIGHT/strs$CPUE_TRAPS 
+    strs$sable_cnt         <- (strs$CPUE_SABLE_COUNT/strs$CPUE_TRAPS)
+    strs$sable_wg          <- (strs$CPUE_SABLE_WEIGHT/strs$CPUE_SABLE_COUNT) 
+    strs$sable_avwt_trap   <- (strs$sable_cpue/strs$sable_cnt)
+    strs$strata            <-  paste(strs$SABLE_AREA_GROUP,strs$SABLE_DEPTH_GROUP)
+    
+    strs2 <- arrange(transform(strs, strata=factor(strata,levels=rev(unique(strs$strata)))),strata)
+    tgcwg <- summarySE(strs2, measurevar=("sable_wg"),           groupvars=c("SET_YEAR","strata"),na.rm = T)
+    tgcwg <- arrange(transform(tgcwg,strata=factor(strata,levels=c("S5 RD3", "S5 RD2", "S5 RD1", 
+                                                                   "S4 RD3", "S4 RD2", "S4 RD1", 
+                                                                   "S3 RD3", "S3 RD2", "S3 RD1", 
+                                                                   "S2 RD3", "S2 RD2", "S2 RD1",
+                                                                   "S1 RD3", "S1 RD2", "S1 RD1"))),strata)
+
+    tgcwg$col <- ifelse(tgcwg$SET_YEAR %in% c(2008,2009), "red", "steelblue")
+
+    ggplot(tgcwg,aes(x= SET_YEAR,y=sable_wg, label= round(sable_wg,1)))+
+    geom_text(size = 3, vjust = 0, nudge_y = 1.5) +
+    geom_errorbar(aes(ymin=sable_wg-ci, ymax=sable_wg+ci), width=0, col=tgcwg$col) +
+    geom_line(col=tgcwg$col) +
+    geom_point(col=tgcwg$col) +
+    facet_wrap(~strata,nrow=5)+
+    coord_cartesian(ylim=c(1,7)) + 
+    xlab("Year")+
+    ylab("Sablefish weight (kg)") +
+             scale_x_continuous(breaks = integer_breaks()) +
+     theme(axis.text = element_text(size = 9)) +
+     theme(     panel.background = element_rect(fill = "white",
+                                colour = "grey50",
+                                size = 0.5, linetype = "solid"),
+                panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                colour = "grey90"), 
+                panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                colour = "grey90"),
+                strip.background =  element_rect(fill = "grey80", colour = "grey30"), 
+                plot.margin=unit(c(0.2,0.2,0.2,1),"cm")) 
+    
+    while (!is.null(dev.list()))  dev.off()
+    img <-    paste(figpath,'figure9.png',sep='')   # -- retrieve png 
+              knitr::include_graphics(img)
+```   
+\clearpage
+
+(ref:figure10) Annual mean weight of sablefish per trap (kg/trap) (A);  annual mean number of sablefish per trap (#fish/trap) (B); annual mean weight of sablefish (kg) (C) by StRS survey strata over time. Horizontal line is median and blue dots are arithmetic mean.
+
+```{r figure10, fig.cap='(ref:figure10)', out.width = "450px", out.height = "576px",echo=FALSE, fig.align="center", warning=FALSE}
+
+       png(paste(figpath,'figure10.png', sep=''), width=600, height=800) # write png to file
+       library(cowplot)
+
+       p <- ggplot(tgc,aes(x=as.factor(SET_YEAR), y=sable_cpue)) + 
+            geom_boxplot(fill="grey90", width=0.5) +
+            stat_summary(fun.y=mean, geom="point", shape=16, size=2, col="steelblue") +
+            stat_summary(fun = mean, geom = "text", col = "red", size=4.5,    # Add text to plot
+                 vjust = 2.0, aes(label = paste("", round(..y.., digits = 1)))) +
+            xlab("Year")+
+            ylab("StRS CPUE (kg/trap)")+ 
+                   annotate(geom="text", x=7, y=70, label="StRS sites",
+                   color="steel blue", size=5) +
+            #scale_y_continuous(limits=c(0,175))+
+            theme_bw() +
+            theme(axis.text = element_text(size = 11)) 
+  
+       p1 <-ggplot(tgcnt, aes(x=as.factor(SET_YEAR), y=sable_cnt)) + 
+            geom_boxplot(fill="grey90", width=0.5) +
+            stat_summary(fun.y=mean, geom="point", shape=16, size=2,col="steelblue")+
+            stat_summary(fun = mean, geom = "text", col = "red", size=4.5,    # Add text to plot
+                 vjust = 2.0, aes(label = paste("", round(..y.., digits = 1)))) +
+            xlab("Year") +
+            ylab("CPUE (#fish/trap)") +
+            #scale_y_continuous(limits=c(0,75))+
+            theme_bw() + 
+            theme(axis.text = element_text(size = 11)) 
+      
+     
+     p2 <- ggplot(tgcwg, aes(x=as.factor(SET_YEAR), y=sable_wg )) + 
+           geom_boxplot(fill="grey90", width=0.5) +
+           stat_summary(fun.y=mean, geom="point", shape=16, size=2,col="steelblue") +
+           stat_summary(fun = mean, geom = "text", col = "red", size=4.5,    # Add text to plot
+               vjust = 2.0, aes(label = paste("", round(..y.., digits = 1)))) +
+           xlab("Year") +
+           ylab("Mean weight (kg)") +
+           theme_bw() +
+           theme(axis.text = element_text(size = 11))
+
+    plot_grid(p, p1, p2, labels = "AUTO", nrow = 3)    
+  
+    while (!is.null(dev.list()))  dev.off()
+    img <-    paste(figpath,'figure10.png',sep="")   # -- retrieve png 
+              knitr::include_graphics(img)
+
+```
+\clearpage
+
+(ref:figure11) Offshore indexing annual mean weight of sablefish per trap (kg/trap) (A);  annual mean number of sablefish per trap (#fish/trap) (B); annual mean weight of sablefish (kg) (C) over time. Horizontal line is median and blue dots are arithmetic mean.
+
+```{r figure11, fig.cap='(ref:figure11)',echo=FALSE,dpi=550, out.width = "448px", out.height = "600px", fig.align = "center",warning=FALSE}
+    #------S Q L ---C P U E ----B O X P L O T ---O F F S H O R E---S T A N D A R D I Z E D---------
+
+    png(paste(figpath,'figure11.png', sep=""), width = 648, height = 828)  # write png to folder
+                           
+    cpuedt    <-  "SELECT  * from dbo.GENERIC_GFBIO_TRAPS where year < 2010 and [Spatial.Stratum] not like '%Quatsino Sound%' "
+    #cpuedat  <-  GetSQLData(cpuedt,"Sablefish") 
+    #write.table(cpuedat, file = paste(path,"figure11.csv",sep=''),row.names=FALSE, na="",col.names=TRUE, sep=",")
+    cpuedat   <-  read.csv(paste(path,'figure11.csv',sep=''),header=T)
+
+    offstnd           <- cpuedat[ which(cpuedat$SABLE.SET.TYPE=="OFFSHORE STANDARDIZED" ), ]
+    offstnd.dat       <- offstnd[ which(is.na(offstnd$SABLE.SET.TYPE)==FALSE), ]
+    offstnd.dat       <- offstnd.dat[offstnd.dat$year >=1990 & offstnd.dat$year <= yr+1,]  
+
+    offstnd.dat$sable_cpuew <-  offstnd.dat$CPUE.SABLE.WEIGHT/offstnd.dat$CPUE.TRAPS   #weight per trap
+    offstnd.summaryw        <-  summarySE(offstnd.dat, measurevar="sable_cpuew", groupvars=c("year"),na.rm = T) 
+    offstand.2w             <-  arrange(transform(offstnd.dat[offstnd.dat$year>1989,],
+                                                              year=factor(year,levels=c(1990,1991,1992,1993,
+                                                                                        1994,1995,1996,1997,
+                                                                                        1998,1999,2000,2001,
+                                                                                        2002,2003,2004,2005,
+                                                                                        2006,2007,2008,2009 ))), year)
+
+    offstnd.dat$sable_cpuec  <-  offstnd.dat$CPUE.SABLE.COUNT/offstnd.dat$CPUE.TRAPS   #count per trap
+    offstnd.summaryc         <-  summarySE(offstnd.dat, measurevar="sable_cpuec", groupvars=c("year"),na.rm = T) 
+    offstand.2c              <-  arrange(transform(offstnd.dat[offstnd.dat$year>1989,],
+                                                               year=factor(year,levels=c(1990,1991,1992,1993,
+                                                                                         1994,1995,1996,1997,
+                                                                                         1998,1999,2000,2001,
+                                                                                         2002,2003,2004,2005,
+                                                                                         2006,2007,2008,2009 ))), year)
+    
+    offstnd.dat$sable_cpuewg <-  offstnd.dat$CPUE.SABLE.WEIGHT/offstnd.dat$CPUE.SABLE.COUNT  # average sablefish weight
+    offstnd.summarycwg       <-  summarySE(offstnd.dat, measurevar="sable_cpuewg", groupvars=c("year"),na.rm = T) 
+    offstand.2wg             <-  arrange(transform(offstnd.dat[offstnd.dat$year>1989,],
+                                                               year=factor(year,levels=c(1990,1991,1992,1993,
+                                                                                         1994,1995,1996,1997,
+                                                                                         1998,1999,2000,2001,
+                                                                                         2002,2003,2004,2005,
+                                                                                         2006,2007,2008,2009 ))), year)
+
+     g <- ggplot(offstand.2w, aes(x=year, y=CPUE.SABLE.WEIGHT/CPUE.TRAPS),
+                 position =  position_dodge2(width = 0.5, preserve = "single")) +
+                 geom_boxplot(fill="grey90", width=0.4) +
+                 stat_summary(fun.y=mean, geom="point", shape=16, size=2,col="steel blue") +
+                 stat_summary(fun = mean, geom = "text", col = "red", size=4.5,    # Add text to plot
+                       vjust = 2.0, aes(label = paste("", round(..y.., digits = 1)))) +
+                 xlab("Year") +
+                 ylab("CPUE (kg/trap)") +
+                 #scale_y_continuous(limits=c(0,100))+
+                 scale_x_discrete(breaks = seq(1990, 2009, by = 2)) +
+                 theme(axis.text = element_text(size = 5)) + 
+                 annotate(geom="text", x=17, y=90, label="Offshore indexing sites",
+                 color="steel blue", size=5) +
+                 theme_bw()
+    
+     
+     g1 <- ggplot(offstand.2c, aes(x=year, y=CPUE.SABLE.COUNT/CPUE.TRAPS),
+                  position =  position_dodge2(width = 0.5, preserve = "single")) + 
+                  geom_boxplot(fill="grey90", width=0.4) +
+                  stat_summary(fun.y=mean, geom="point", shape=16, size=2,col="steel blue") +
+                  stat_summary(fun = mean, geom = "text", col = "red", size=4.5,    # Add text to plot
+                       vjust = 2.0, aes(label = paste("", round(..y.., digits = 1)))) +
+                  xlab("Year") +
+                  ylab("CPUE (#fish/trap)") +
+                  #scale_y_continuous(limits=c(0,100))+
+                  scale_x_discrete(breaks = seq(1990, 2009, by = 2)) +
+                  theme(axis.text = element_text(size = 5)) + 
+                  theme_bw()
+     
+     g2 <- ggplot(offstand.2wg, aes(x=year, y=CPUE.SABLE.WEIGHT/CPUE.SABLE.COUNT),
+                  position =  position_dodge2(width = 0.5, preserve = "single")) + 
+                  geom_boxplot(fill="grey90", width=0.4) +
+                  stat_summary(fun.y=mean, geom="point", shape=16, size=2,col="steel blue") +
+                  stat_summary(fun = mean, geom = "text", col = "red", size=4.5,    # Add text to plot
+                       vjust = 2.0, aes(label = paste("", round(..y.., digits = 1)))) +
+                  xlab("Year") +
+                  ylab("Mean weight (kg)") +
+                  theme(axis.text = element_text(size = 5)) + 
+                  scale_x_discrete(breaks = seq(1990, 2009, by = 2)) +
+                  theme_bw()
+     
+     plot_grid(g, g1, g2, labels = "AUTO", nrow = 3)
+
+     while (!is.null(dev.list()))  dev.off()
+     img <-  paste(paste(figpath,'figure11.png',sep=""))   # -- retrieve png 
+          knitr::include_graphics(img)
+
+```
+\clearpage
+
+(ref:figure12) Average weight of sablefish per trap (kg/trap) (A);  average number of sablefish per trap (#fish/trap) (B); annual average weight of sablefish (kg) (C) at mainland inlets over time.  Horizontal line is median and blue dots are arithmetic mean.
+
+```{r figure12, fig.cap='(ref:figure12)', results='asis', out.width = "450px",out.height = "560px", fig.align="center"}
+
+    png(paste(figpath,'figure12.png',sep=''), width=600, height=800) # write png to file
+    cpuedat.Inlet   <-  read.csv(paste(path,'figure11.csv',sep=''),header=T)  #data stored here
+    
+    #pick out the INLET SETS
+    dat.Inlet   <- cpuedat.Inlet[ which(cpuedat.Inlet$SABLE.SET.TYPE=="INLET STANDARDIZED" ), ]
+    dat.Inlet   <- dat.Inlet[ which(is.na(dat.Inlet$SABLE.SET.TYPE)==FALSE), ]
+    inlet       <- dat.Inlet[dat.Inlet$year >1993 & dat.Inlet$year <= yr+1,]  
+    
+    inlet$sable_cpuew <-  inlet$CPUE.SABLE.WEIGHT/inlet$CPUE.TRAPS
+    itgcw             <-  summarySE(inlet, measurevar="sable_cpuew", groupvars=c("year"),na.rm = T)
+
+    inlet.2w          <-  arrange(transform(inlet[inlet$year>1993,],year=factor(year,levels=c(1994,1995,1996,1997,
+                                                                                              1998,1999,2000,2001,
+                                                                                              2002,2003,2004,2005,
+                                                                                              2006,2007,2008,2009
+                                                                                              ))),year)
+
+    inlet$sable_cpue  <-  inlet$CPUE.SABLE.COUNT/inlet$CPUE.TRAPS
+    itgc              <-  summarySE(inlet, measurevar="sable_cpue", groupvars=c("year"),na.rm = T) 
+    inlet.2           <-  arrange(transform(inlet[inlet$year>1993,],year=factor(year,levels=c(1994,1995,1996,1997,
+                                                                                              1998,1999,2000,2001,
+                                                                                              2002,2003,2004,2005,
+                                                                                              2006,2007,2008,2009
+                                                                                              ))),year)
+    inlet$sable_cpuwg <-  inlet$CPUE.SABLE.WEIGHT/inlet$CPUE.SABLE.COUNT
+    itgcwg            <-  summarySE(inlet, measurevar="sable_cpuwg", groupvars=c("year"),na.rm = T) 
+    inlet.2wg         <-  arrange(transform(inlet[inlet$year>1993,],year=factor(year,levels=c(1994,1995,1996,1997,
+                                                                                              1998,1999,2000,2001,
+                                                                                              2002,2003,2004,2005,
+                                                                                              2006,2007,2008,2009
+                                                                                              ))),year)
+    
+
+     p <- ggplot(inlet.2w, aes(x=year, y=CPUE.SABLE.WEIGHT/CPUE.TRAPS)) +
+          geom_boxplot(fill="grey90", width=0.4) +
+          stat_summary(fun.y=mean, geom="point", shape=16, size=2,col="steel blue") +
+          stat_summary(fun = mean, geom = "text", col = "red", size=4.5,    # Add text to plot
+               vjust = 2.0, aes(label = paste("", round(..y.., digits = 1)))) +
+          xlab("Year") +
+          ylab("CPUE (kg/trap)") +
+          #scale_y_continuous(limits=c(0,100))+
+          scale_x_discrete(breaks = seq(1994, 2009, by = 2)) +
+             annotate(geom="text", x=14, y=90, label="Mainland inlets",
+                 color="steel blue", size=5) +
+          theme(axis.text = element_text(size = 5)) + 
+          theme_bw()
+    
+     
+     p1 <- ggplot(inlet.2, aes(x=year, y=CPUE.SABLE.COUNT/CPUE.TRAPS),
+                          position =  position_dodge2(width = 0.5, preserve = "single")) + 
+          geom_boxplot(fill="grey90", width=0.4) +
+          stat_summary(fun.y=mean, geom="point", shape=16, size=2,col="steel blue") +
+          stat_summary(fun = mean, geom = "text", col = "red", size=4.5,    # Add text to plot
+               vjust = 2.0, aes(label = paste("", round(..y.., digits = 1)))) +
+          xlab("Year") +
+          ylab("CPUE (#fish/trap)") +
+          #scale_y_continuous(limits=c(0,100))+
+          scale_x_discrete(breaks = seq(1994, 2009, by = 2)) +
+          theme(axis.text = element_text(size = 5)) + 
+          theme_bw()
+     
+     p2 <- ggplot(inlet.2wg, aes(x=year, y=CPUE.SABLE.WEIGHT/CPUE.SABLE.COUNT),
+                          position =  position_dodge2(width = 0.5, preserve = "single")) + 
+          geom_boxplot(fill="grey90", width=0.4) +
+          stat_summary(fun.y=mean, geom="point", shape=16, size=2,col="steel blue") +
+          stat_summary(fun = mean, geom = "text", col = "red", size=4.5,    # Add text to plot
+               vjust = 2.0, aes(label = paste("", round(..y.., digits = 1)))) +
+          xlab("Year") +
+          ylab("Mean weight (kg)") +
+          theme(axis.text = element_text(size = 5)) + 
+          scale_x_discrete(breaks = seq(1994, 2009, by = 2)) +
+          theme_bw()
+     
+     plot_grid(p, p1, p2, labels = "AUTO", nrow = 3)
+
+     while (!is.null(dev.list()))  dev.off()
+     img <-  paste(paste(figpath,'figure12.png',sep=""))   # -- retrieve png 
+          knitr::include_graphics(img)
+
+```
+\clearpage
+
+(ref:figure13) Length frequencies for female (grey) and male sablefish (blue) up to `r yr+1` for all StRS sets.  The number of specimens is denoted by the letter n, the mean indicated by xbar $\overline{x}$ and the standard deviation is represented by sigma $\sigma$ (A). Average length and ratios of male and female sablefish by year. Numbers of fish are shown across the top of the lines (B).
+
+```{r figure13, fig.cap='(ref:figure13)',results='asis', out.width = "450px",out.height = "550px", fig.align="center"}
+
+    knitr::opts_chunk$set(out.height = "\\textheight",  out.width = "\\textwidth")
+    #  L E N G T H    H I S T O G R A M  
+    png(paste(figpath,'figure13.png',sep=""), width = 800, height = 924) # write png to folder
+      
+    par(mfcol=c(2,1), mar=c(4,4,1,1), oma=c(3,2,1,1), cex=1.2)  # -- mar(bottom, left, top, and right)
+    par(xpd=NA)  # for placement of A,B
+      
+    # -- Sablefish.dbo.procReport_Survey_LenMF pulls length data from table GFBIO_SABLEBIO_VW for StRS
+    # -- from procedure Build_BIO_Sablefish_Tables for the histogram of lengths
+    
+    lengthdat.StRS     <-   "exec procReport_Survey_LenMF"   # StRS lengths for sex 0,1,2
+    #lengthdata.StRS    <-   GetSQLData(lengthdat.StRS,"Sablefish")
+    #write.table(lengthdata.StRS, file = paste(path,'figure13.csv',sep=''), row.names=FALSE, na="",col.names=TRUE,  sep=",") 
+    lengthdata.StRS    <- read.csv(paste(path,"figure13.csv",sep=""), header=T)
+    
+    fdat      <- lengthdata.StRS[lengthdata.StRS$sex==2,]
+    mdat      <- lengthdata.StRS[lengthdata.StRS$sex==1,]
+    
+    lenMF     <- lengthdata.StRS[lengthdata.StRS$year <= yr,] 
+    brk       <- seq(min(lengthdata.StRS$length)-1,max(lengthdata.StRS$length)+1)
+    osex      <- length(lengthdata.StRS$length[lengthdata.StRS$sex==3])
+    	
+    # -- set up the female data
+    females  <-   lenMF$length[lenMF$sex==2]
+    females  <-   females[!is.na(females)]
+    tf       <-   length(females)                                 # -- count female lengths
+    mLf      <-   format(round(mean(females,na.rm=T),1),nsmall=1) # -- mean female length
+    stdf     <-   round(sd(females),1)                            # -- standard deviation
+    	
+    #--  set up the male data
+    males    <-   lenMF$length[lenMF$sex==1]
+    tm       <-   length(males)                                   # -- count male lengths
+    mLm      <-   format(round(mean(males,na.rm=T),1),nsmall=1)   # -- mean male length
+    stdm     <-   round(sd(males),1)                              # -- standard deviation
+    	
+    # -- data for the next year...
+    secondyrfem <-   lengthdata.StRS[lengthdata.StRS$year == yr+1 & lengthdata.StRS$sex == 2,] 
+    secondyrmal <-   lengthdata.StRS[lengthdata.StRS$year == yr+1 & lengthdata.StRS$sex == 1,] 
+    
+    lenMF2      <-   lengthdata.StRS[lengthdata.StRS$year <= yr+1,] 
+    brk2        <-   seq(min(lenMF2$length)-1,max(lenMF2$length)+1)
+    nosex2      <-   length(lenMF2$length[lenMF2$sex==3])
+    
+    # set up the female data
+    females2  <-   lenMF2$length[lenMF2$sex==2]
+    females2  <-   females2[!is.na(females2)]
+    tf2       <-   format(length(females2), big.mark=",")          # -- count female lengths
+    mLf2      <-   format(round(mean(females2,na.rm=T),1),nsmall=1)# -- mean female length
+    stdf2     <-   round(sd(females2),1)                           # -- standard deviation
+    	
+    # --  set up the male data
+    males2    <-   lenMF2$length[lenMF2$sex==1]
+    tm2       <-   format(length(males2), big.mark=",")            # -- count male lengths
+    mLm2      <-   format(round(mean(males2,na.rm=T),1),nsmall=1)  # -- mean male length
+    stdm2     <-   round(sd(males2),1)                             # -- standard deviation
+    
+    a2    <-   hist(females2, breaks = brk, plot=F)
+    b2    <-   hist(males2,   breaks = brk, plot=F)  # draw the histogram with the specified number of bins
+    	
+ 	  plot(b2, col=rgb(0.27,.51,.71,0.5), border="white", main="", xlab="Length (cm)", xlim=c(30,100))
+   	plot(a2, col=rgb(0.1,0.1,0.1,0.5), border="white", add = TRUE)
+    box()
+    	
+    panLab(0.79,0.4,paste("StRS 2003-", yr+1, sep=""), cex=1.0)  # -- Labels
+   	panLab(0.19,0.98,"Sablefish males", col="steel blue")
+    panLab(0.79,0.98,"Sablefish females", col= "gray50")
+    	
+    panLab(0.19,0.9,bquote(bold(n)==.(tm2)))
+    panLab(0.79,0.9,bquote(bold(n)==.(tf2)))
+    	
+    panLab(0.19,0.8,bquote(bolditalic(bar(x))==.(mLm2)))
+    panLab(0.79,0.8,bquote(bolditalic(bar(x))==.(mLf2)))
+    	
+   	panLab(0.19,0.7,bquote(bold(sigma)==.(stdm2)) )
+    panLab(0.79,0.7,bquote(bold(sigma)==.(stdf2)) )
+    	
+    di <- dev.size("in")
+    x  <- grconvertX(c(0, di[1]), from="in", to="user")
+    y  <- grconvertY(c(0, di[2]), from="in", to="user")
+    fig <- par("fig")
+    x <- x[1] + (x[2] - x[1]) * fig[1:2]
+    y <- y[1] + (y[2] - y[1]) * fig[3:4]
+    txt <- "A"
+    x <- x[1] + strwidth(txt, cex=3) / 2
+    y <- y[2] - strheight(txt, cex=3)/ 2
+    text(x, y, txt, cex=1.5)
+
+    #  M E A N   L E N G T H   P L O T 
+    #  Sablefish.dbo.procRReport_Survey_LenAvg pulls length data from table GFBIO_SABLEBIO_VW from 
+    #  procedure:  Build_BIO_Sablefish_Tables
+     
+    lenstats  <- "exec procRReport_Survey_LenAvg"
+    #dat       <- GetSQLData(lenstats,"Sablefish") 
+    #write.table(dat, file = paste(path,"figure13a.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",")
+    dat       <- read.csv(paste(path,'figure13a.csv', sep=''),header=T) # read from csv
+    dat       <- dat[dat$YEAR <= yr+1, ]
+     
+    fdat      <- dat[dat$sex==2,]
+    mdat      <- dat[dat$sex==1,]
+    #format(fdat$count/(fdat$count+mdat$count),digits=2)
+    #format(mdat$count/(fdat$count+mdat$count),digits=2)
+    MxSeam    <- max(dat$AvL)
+    
+    plot(fdat$YEAR, fdat$AvL,pch=2, xlim=c(2003,yr+1), ylim=c(50, 78),cex=1.0, 
+          ylab="Average length (cm)", xlab="Year", cex.lab=1.0, cex.axis = 1.0,
+          col="gray30",xaxt="n")
+    axis(1, seq(2003,2009,1), cex.axis=1.0)
+    lines(fdat$YEAR,fdat$AvL,lwd=2, lty=2, col="gray30") # plot points and lines
+     
+    points(mdat$YEAR,mdat$AvL,pch=16,col="steelblue") 
+    lines(mdat$YEAR, mdat$AvL,lwd=2,lty=1,col="steelblue")
+
+    text(fdat$YEAR, fdat$AvL+1.5, fdat$count,cex=1.0)
+    text(mdat$YEAR, mdat$AvL+1.5, mdat$count,cex=1.0)
+    text(fdat$YEAR,53,format(mdat$count/fdat$count,digits=1),cex=1.0)
+    text(2003.4,51,"M:F ratio",cex=1.0)
+    par(usr=c(0,1,0,1))  # set up the plot margins
+        
+    legend(0.035,1, c("  Sablefish females","  Sablefish males"), 
+            lty=c(2,1), lwd=2, bty="n", col=c("gray50","steelblue"), cex=1.0)
+    legend(0.025,1, c("",""), pch=c(2,16), bty="n", col=c("gray50","steelblue"))
+    #panLab(0.86,0.94,paste("StRS 2003-", yr+1, sep=""), cex=1.0)
+     
+    di <- dev.size("in")
+    x  <- grconvertX(c(0, di[1]), from="in", to="user")
+    y  <- grconvertY(c(0, di[2]), from="in", to="user")
+    fig <- par("fig")
+    x <- x[1] + (x[2] - x[1]) * fig[1:2]
+    y <- y[1] + (y[2] - y[1]) * fig[3:4]
+    txt <- "B"
+    x <- x[1] + strwidth(txt, cex=3) / 2
+    y <- y[2] - strheight(txt, cex=3)/ 2
+    text(x, y, txt, cex=1.5)
+    
+    while (!is.null(dev.list()))  dev.off()  
+    img14 <- paste(paste(figpath,'figure13.png',sep='')) 
+    knitr::include_graphics(img14)
+``` 
+\clearpage
+
+(ref:figure14) Length frequencies for female (grey) and male sablefish (blue) up to `r yr+1` for all offshore indexing sets.  The number of specimens is denoted by the letter n, the mean indicated by xbar $\overline{x}$ and the standard deviation is represented by sigma $\sigma$ (A). Average length and ratios of male and female sablefish by year. Numbers of fish are shown across the top of the lines (B).
+
+```{r figure14, fig.cap='(ref:figure14)',results='asis', out.width = "450px",out.height = "550px", fig.align="center"}
+
+      knitr::opts_chunk$set(out.height = "\\textheight",  out.width = "\\textwidth")
+      #  L E N G T H    H I S T O G R A M  SET_YEAR
+      #  Sablefish.dbo.procR_Survey_Sablefish_LenMF pulls length data from table GFBIO_SABLEBIO_VW 
+      #  procedure:  Build_BIO_Sablefish_Tables
+
+      lendat.Off     <-   "exec procR_Survey_Sablefish_LenMF"   # offshore lengths for all set types
+      #lendata.Off    <-   GetSQLData(lendat.Off,"Sablefish")
+      #write.table(lendata.Off, file = paste(path,'figure14.csv',sep=''), row.names=FALSE, na="",col.names=TRUE,  sep=",") 
+      lendata.Off    <-    read.csv(paste(path,'figure14.csv',sep=''),header=T) 
+      lendata.Off    <-    lendata.Off[lendata.Off$SABLE_SET_TYPE == "OFFSHORE STANDARDIZED",]
+      
+      lendataMF.Off  <-   lendata.Off[lendata.Off$YEAR <= yr+1,] 
+      brk            <-   seq(min(lendataMF.Off$Length)-1,max(lendataMF.Off$Length)+1)
+      osex           <-   length(lendataMF.Off$Length[lendataMF.Off$Sex==3])
+    
+      # -- set up the female data
+      females.Off  <-   lendataMF.Off$Length[lendataMF.Off$Sex==2]
+      females.Off  <-   females.Off[!is.na(females.Off)]
+      tf.Off       <-   format(length(females.Off) , big.mark=",")          # -- count female lengths
+      mLf.Off      <-   format(round(mean(females.Off,na.rm=T),1),nsmall=1) # -- mean female length
+      stdf.Off     <-   round(sd(females.Off),1)                            # -- standard deviation
+    	
+      #--  set up the male data
+      males.Off    <-   lendataMF.Off$Length[lendataMF.Off$Sex==1]
+      tm.Off       <-   format(length(males.Off), big.mark=",")             # -- count male lengths
+      mLm.Off      <-   format(round(mean(males.Off,na.rm=T),1),nsmall=1)   # -- mean male length
+      stdm.Off     <-   round(sd(males.Off),1)                              # -- standard deviation
+   
+      png(paste(figpath,'figure14.png',sep=""), width = 800, height = 924) # write png to folder
+      
+      par(mfcol=c(2,1), mar=c(4,4,1,1), oma=c(3,2,1,1), cex=1.2)  # -- mar(bottom, left, top, and right)
+      par(xpd=NA)  # for placement of A,B
+     	a2    <-   hist(females.Off, breaks = brk, plot=F)
+    	b2    <-   hist(males.Off,   breaks = brk, plot=F)  # draw the histogram with the specified number of bins
+    	
+ 	    plot(b2, col=rgb(0.27,.51,.71,0.5), border="white", main="", xlab="Length (cm)", xlim=c(30,100))
+    	plot(a2, col=rgb(0.1,0.1,0.1,0.5), border="white", add = TRUE)
+    	box()
+    	
+      panLab(0.83,0.4,paste("Offshore Indexing 1990-", yr+1, sep=""), cex=1.0)  # -- Labels
+    	panLab(0.19,0.98,"Sablefish males", col="steel blue")
+    	panLab(0.79,0.98,"Sablefish females", col= "gray50")
+    	
+    	panLab(0.19,0.9,bquote(bold(n)==.(tm.Off)))
+    	panLab(0.79,0.9,bquote(bold(n)==.(tf.Off)))
+    	
+    	panLab(0.19,0.8,bquote(bolditalic(bar(x))==.(mLm.Off)))
+    	panLab(0.79,0.8,bquote(bolditalic(bar(x))==.(mLf.Off)))
+    	
+    	panLab(0.19,0.7,bquote(bold(sigma)==.(stdm.Off)) )
+    	panLab(0.79,0.7,bquote(bold(sigma)==.(stdf.Off)) )
+    	
+    	 di <- dev.size("in")
+       x  <- grconvertX(c(0, di[1]), from="in", to="user")
+       y  <- grconvertY(c(0, di[2]), from="in", to="user")
+       fig <- par("fig")
+       x <- x[1] + (x[2] - x[1]) * fig[1:2]
+       y <- y[1] + (y[2] - y[1]) * fig[3:4]
+       txt <- "A"
+       x <- x[1] + strwidth(txt, cex=3) / 2
+       y <- y[2] - strheight(txt, cex=3)/ 2
+       text(x, y, txt, cex=1.5)
+
+     #  M E A N   L E N G T H   P L O T 
+     #  Sablefish.dbo.rocRReport_Survey_LenAvg pulls length data from table GFBIO_SABLEBIO_VW from 
+     #  procedure:  Build_BIO_Sablefish_Tables
+     
+     lenstats.Off  <- paste("select YEAR, SABLEFISH_SURVEY_IND, AVG(CAST(Fork_Length AS float) / 10.0) AS AvL, ", 
+          	                "SPECIMEN_SEX_CODE AS sex, SABLE_SET_TYPE,  COUNT(SPECIMEN_ID) AS count ",
+                            "from   (select  YEAR, TRIP_ID, SABLEFISH_SURVEY_IND, SPECIMEN_SEX_CODE, Fork_Length, Round_Weight, ",
+          				          "SPECIMEN_ID, SPECIMEN_AGE, SABLE_SET_TYPE ",
+                            "from dbo.GFBIO_SABLEBIO_VW ",
+                            "group by YEAR, TRIP_ID, SPECIMEN_SEX_CODE, Fork_Length, ",
+          		              "Round_Weight, SPECIMEN_AGE, SPECIMEN_ID, SABLEFISH_SURVEY_IND, SABLE_SET_TYPE ",
+                            "having  (SABLEFISH_SURVEY_IND = 1)) AS tab ",
+                            "where   (NOT (Fork_Length IS NULL)) ",
+                            "group by  YEAR, SABLEFISH_SURVEY_IND, SPECIMEN_SEX_CODE, SABLE_SET_TYPE ",
+                            "having   (SPECIMEN_SEX_CODE IN (1, 2)) AND (SABLE_SET_TYPE = N'OFFSHORE STANDARDIZED') AND (YEAR >= 1990) ",
+                            "order by  sex, YEAR", sep="")
+     #dat.lenstats.Off  <- GetSQLData(lenstats.Off ,"Sablefish") 
+     #write.table(dat.lenstats.Off, file = paste(path,"figure14a.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",")
+     dat.lenstats.Off  <- read.csv(paste(path,'figure14a.csv', sep=''),header=T) # read from csv
+     dat.lenstats.Off  <- dat.lenstats.Off[dat.lenstats.Off$YEAR <= yr+1, ]
+     
+     fdat.lenstats.Off      <- dat.lenstats.Off[dat.lenstats.Off$sex==2,]
+     mdat.lenstats.Off      <- dat.lenstats.Off[dat.lenstats.Off$sex==1,]
+     MxSeam.lenstats.Off    <- max(dat.lenstats.Off$AvL)
+    
+     plot(fdat.lenstats.Off$YEAR, fdat.lenstats.Off$AvL,pch=2, xlim=c(1990,yr+1), ylim=c(50, 78),cex=1.0, 
+          ylab="Average length (cm)", xlab="Year", cex.lab=1.0, cex.axis = 1.0,
+          col="gray30",xaxt="n")
+     axis(1, seq(1990,2009,1), cex.axis=1.0)
+     lines(fdat.lenstats.Off$YEAR,fdat.lenstats.Off$AvL,lwd=2, lty=2, col="gray30") # plot points and lines
+     
+     points(mdat.lenstats.Off$YEAR,mdat.lenstats.Off$AvL,pch=16,col="steelblue") 
+     lines(mdat.lenstats.Off$YEAR, mdat.lenstats.Off$AvL,lwd=2,lty=1,col="steelblue")
+
+     text(fdat.lenstats.Off$YEAR, fdat.lenstats.Off$AvL+1.5, fdat.lenstats.Off$count,cex=1.0)
+     text(mdat.lenstats.Off$YEAR, mdat.lenstats.Off$AvL+1.5, mdat.lenstats.Off$count,cex=1.0)
+     text(fdat.lenstats.Off$YEAR,53,format(mdat.lenstats.Off$count/fdat.lenstats.Off$count,digits=1),cex=1.0)
+     text(2003.4,51,"M:F ratio",cex=1.0)
+     par(usr=c(0,1,0,1))  # set up the plot margins
+        
+     legend(0.035,1, c("  Sablefish females","  Sablefish males"), 
+            lty=c(2,1), lwd=2, bty="n", col=c("gray50","steelblue"), cex=1.0)
+     legend(0.025,1, c("",""), pch=c(2,16), bty="n", col=c("gray50","steelblue"))
+     #panLab(0.76,0.94,paste("Offshore Indexing 1990-", yr+1, sep=""), cex=1.0)
+     
+       di <- dev.size("in")
+       x  <- grconvertX(c(0, di[1]), from="in", to="user")
+       y  <- grconvertY(c(0, di[2]), from="in", to="user")
+       fig <- par("fig")
+       x <- x[1] + (x[2] - x[1]) * fig[1:2]
+       y <- y[1] + (y[2] - y[1]) * fig[3:4]
+       txt <- "B"
+       x <- x[1] + strwidth(txt, cex=3) / 2
+       y <- y[2] - strheight(txt, cex=3)/ 2
+       text(x, y, txt, cex=1.5)
+     
+     while (!is.null(dev.list()))  dev.off()  
+     img16 <- paste(paste(figpath,'figure14.png',sep='')) 
+     knitr::include_graphics(img16)
+``` 
+\clearpage
+
+(ref:figure15) Sablefish fork length (cm) vs weight (kg) for all females and males for the `r yr` (A,C) and `r yr+1` (B,D) surveys.
+
+```{r figure15, fig.cap='(ref:figure15)',results='asis', out.width = "450px",out.height = "550px", fig.align="center"}
+    
+    # L E N G T H     W E I G H T -- Sablefish.dbo.procR_Survey_Sablefish_LenWt_shiny queries table GFBIO_SABLEBIO_VW 	
+    png(paste(figpath,'figure15.png', sep=''), width = 800, height = 924) # -- starts writing a png to figure folder
+    par(mfcol=c(2,2), mar=c(4,4,1,1), oma=c(2,2,3,1), cex=1.0)  # -- mar(bottom, left, top, and right)
+    par(xpd=NA)  # for placement of A,B,C,D
+
+    lenWT     <- "exec procR_Survey_Sablefish_LenWt_shiny"
+    #lenWTdat1 <- GetSQLData(lenWT,"Sablefish") 
+    #write.table(lenWTdat1, file = paste(path,"figure15.csv",sep=''), row.names=FALSE, na="",col.names=TRUE,  sep=",") 
+    lenWTdat1 <- read.csv(paste(path,'figure15.csv',sep=''), header=T) # read from csv
+    lenWTdat  <- lenWTdat1[lenWTdat1$YEAR==yr,]
+
+    for (i in c(2,1)) {
+         ylim <- c(min(lenWTdat$weight),max(lenWTdat$weight))
+         xlim <- c(min(lenWTdat$length),max(lenWTdat$length))    
+         lbls <- c(paste(yr,":  Males","",sep=""),paste(yr,":  Females","",sep=""))
+   
+         t    <- length(lenWTdat$length[lenWTdat$sex==i])                    
+         fit1 <- lm(log(weight)~log(length), data=lenWTdat[lenWTdat$sex==i ,])
+         a    <- round(exp(fit1$coef[1]),7)
+         b    <- round(fit1$coef[2],3)
+         Wt   <- (a * (0:xlim[2])^b)  
+
+      plot(jitter(lenWTdat$length[lenWTdat$sex==i],2), 
+           jitter(lenWTdat$weight[lenWTdat$sex==i],2), 
+           pch=16, col="black", cex=0.5,
+           xlab="     Fork length (cm)", ylab="   Round weight (kg)", 
+           main=paste(lbls[i]), xlim=c(0,100), ylim=c(0,12))      
+           lines(0:xlim[2], Wt, col="steelblue", lwd=2) 
+           
+      mw     <- format(round(mean(lenWTdat$weight[lenWTdat$sex==i],na.rm=T),1),nsmall=1)
+      par(usr=c(0,1,0,1))
+      text(0.3,0.9, bquote(bold(n)==.(t)))   # -- number
+      text(0.3,0.8, bquote(bolditalic(bar(W))==.(mw))) # -- mean weight
+      text(0.33,0.7,bquote(bold(a)==.(a)))  # -- a
+      text(0.32,0.6,bquote(bold(b)==.(b)))  # -- b
+      
+      letter <- c("C","A")
+      di <- dev.size("in")
+      x  <- grconvertX(c(0, di[1]), from="in", to="user")
+      y  <- grconvertY(c(0, di[2]), from="in", to="user")
+      fig <- par("fig")
+      x <- x[1] + (x[2] - x[1]) * fig[1:2]
+      y <- y[1] + (y[2] - y[1]) * fig[3:4]
+      txt <- letter[i]
+      x <- x[1] + strwidth(txt, cex=3) / 2
+      y <- y[2] - strheight(txt, cex=3) *2
+      text(x, y, txt, cex=1.5)
+    }
+    
+    lenWTdat.2  <- lenWTdat1[lenWTdat1$YEAR==yr+1,]
+
+    for (i in c(2,1)) {
+      ylim.2 <- c(min(lenWTdat.2$weight),max(lenWTdat.2$weight))
+      xlim.2 <- c(min(lenWTdat.2$length),max(lenWTdat.2$length))    
+      lbls.2 <- c(paste(yr+1,":  Males","",sep=""),paste(yr+1,":  Females","",sep=""))
+   
+      t.2    <- length(lenWTdat.2$length[lenWTdat.2$sex==i])                    
+      fit1.2 <- lm(log(weight)~log(length), data=lenWTdat.2[lenWTdat.2$sex==i ,])
+      a.2    <- round(exp(fit1.2$coef[1]),7)
+      b.2    <- round(fit1.2$coef[2],3)
+      Wt.2   <- (a * (0:xlim.2[2])^b)  
+
+      plot(jitter(lenWTdat.2$length[lenWTdat.2$sex==i],2), 
+      jitter(lenWTdat.2$weight[lenWTdat.2$sex==i],2), pch=16, col="black", cex=0.7,
+         xlab="     Fork length (cm)", ylab="   Round weight (kg)", main=paste(lbls.2[i]), xlim=c(0,100), ylim=c(0,12))      
+         lines(0:xlim.2[2], Wt.2, col="steelblue", lwd=2)      
+      mw.2   <-  format(round(mean(lenWTdat.2$weight[lenWTdat.2$sex==i],na.rm=T),1),nsmall=1)
+      par(usr=c(0,1,0,1))
+      text(0.3,0.9,bquote(bold(n)==.(t.2)))   # number
+      text(0.3,0.8,bquote(bolditalic(bar(W))==.(mw.2))) # mean weight                                                                                                                                                                                 
+      text(0.33,0.7,bquote(bold(a)==.(a.2)))  # a
+      text(0.32,0.6,bquote(bold(b)==.(b.2)))  # b
+    
+       letter <- c("D","B")
+       di <- dev.size("in")
+       x  <- grconvertX(c(0, di[1]), from="in", to="user")
+       y  <- grconvertY(c(0, di[2]), from="in", to="user")
+       fig <- par("fig")
+       x <- x[1] + (x[2] - x[1]) * fig[1:2]
+       y <- y[1] + (y[2] - y[1]) * fig[3:4]
+       txt <- letter[i]
+       x <- x[1] + strwidth(txt, cex=3) / 2
+       y <- y[2] - strheight(txt, cex=3) *2
+       text(x, y, txt, cex=1.5)
+    }
+    
+   while (!is.null(dev.list()))  dev.off() 
+   
+   img <- paste(figpath,'figure15.png',sep="") 
+          knitr::include_graphics(img)
+          
+```
+\clearpage
+
+(ref:figure16) Bubble plot for female (A) and male (B) sablefish ages by survey year from StRS sets.  The sizes of the circles are proportional to the number of fish with given ages. Fish age 35 and older are included in one bubble. The total number of fish aged are listed across the top of each panel. The ages with the highest ratios are posted to the right of each bubble.
+
+```{r figure16, fig.cap='(ref:figure16)',results='asis', out.width = "450px",out.height = "570px", fig.align="center"}
+   # dt  <-  ("exec procRReport_Survey_proportions_at_age")  run this procedure to create table first.
+   # sql server procedure:  procRReport_Survey_proportions_at_age which pulls age data from 
+   # GFBIOSQL.dbo.b21_samples and b22_specimens
+
+   png(paste(figpath,'figure16.png',sep=''), width = 800, height = 924)  # -- starts writing a png to figure folder
+   par(mfrow=c(2,1),cex=1.1)     # -- two vertical plots
+   par(xpd=NA)
+
+   dt.Age     <-  paste("select * from Report_Survey_GFBIO_Age_MF_Prop where SetType='StRS' and Year<=", yr+1, sep="")
+   #age.StRS   <-  GetSQLData(dt.Age,"Sablefish")   
+   #write.table(age.StRS, file = paste(path,"figure16.csv",sep=''), row.names=FALSE, na="",col.names=TRUE,  sep=",") 
+   age.StRS   <-  read.csv(paste(path,"figure16.csv", sep=''), header=T) # read from csv
+   
+   involve  <-  c()
+   involve  <-  unique(age.StRS$Year)
+   maxyr    <-  max(involve)
+   minyr    <-  min(involve)
+
+   # -- plot bubbles for females
+   plot(age.StRS$Year, age.StRS$Age, type="n",xlab=" Year", ylab="", main="Females", ylim=c(0,42), xlim=c(minyr,maxyr),xaxt="n")
+   axis(1, seq(2003,2009,1))            
+   symbols(age.StRS$Year, age.StRS$Age, circles=pi*(age.StRS$Female_Proportion),inches=0.3, add=T,col="light grey")
+
+   for (femaleyr in involve){
+    h   <-   unique(age.StRS$Female_Yr_Total[age.StRS$Year==femaleyr])
+    text(femaleyr + 0.15, 40, bquote(.(h)))   
+    text(femaleyr + 0.17, age.StRS$Age[age.StRS$f==1 & age.StRS$Year==femaleyr],
+         age.StRS$Age[age.StRS$f==1 & age.StRS$Year==femaleyr],
+         col="red",cex=1.2, font=2)}
+    mtext(paste("Age","",sep=""), SOUTH<-2,  line=-1, adj=0.5,cex=1.4,  outer=TRUE)  # -- outside label
+    
+    di <- dev.size("in")
+    x  <- grconvertX(c(0, di[1]), from="in", to="user")
+    y  <- grconvertY(c(0, di[2]), from="in", to="user")
+    fig <- par("fig")
+    x <- x[1] + (x[2] - x[1]) * fig[1:2]
+    y <- y[1] + (y[2] - y[1]) * fig[3:4]
+    txt <- "A"
+    x <- x[1] + strwidth(txt, cex=3) / 2
+    y <- y[2] - strheight(txt, cex=3) / 2
+    text(x, y, txt, cex=1.5)
+    
+    # -- plot bubbles for males
+    plot(age.StRS$Year, age.StRS$Age, type="n", xlab=" Year", ylab="",main="Males", ylim=c(0,42), xlim=c(minyr,maxyr),xaxt="n")
+    axis(1, seq(2003,2009,1))      
+    symbols(age.StRS$Year, age.StRS$Age, circles=pi*(age.StRS$Male_Proportion),inches=0.3, add=T, col="light grey")
+
+    for (maleyr in involve){
+    h      <-  unique(age.StRS$Male_Yr_Total[age.StRS$Year==maleyr])
+    text(maleyr + 0.15, 40, bquote(.(h)))    
+    text(maleyr + 0.17, age.StRS$Age[age.StRS$m==1 & age.StRS$Year==maleyr], 
+         age.StRS$Age[age.StRS$m==1 & age.StRS$Year==maleyr],
+         col="red",cex=1.2, font=2)}
+   
+    di <- dev.size("in")
+    x  <- grconvertX(c(0, di[1]), from="in", to="user")
+    y  <- grconvertY(c(0, di[2]), from="in", to="user")
+    fig <- par("fig")
+    x <- x[1] + (x[2] - x[1]) * fig[1:2]
+    y <- y[1] + (y[2] - y[1]) * fig[3:4]
+    txt <- "B"
+    x <- x[1] + strwidth(txt, cex=3) / 2
+    y <- y[2] - strheight(txt, cex=3) * 2
+    text(x, y, txt, cex=1.5)
+   
+    while (!is.null(dev.list()))  dev.off()  
+    img <-   paste(paste(figpath,'figure16.png',sep=''))   # -- retrieve png from figures folder
+             knitr::include_graphics(img)
+```
+\clearpage
+
+(ref:figure17) Bubble plot for female (A) and male (B) sablefish ages by survey year from offshore indexing sites.  The sizes of the circles are proportional to the number of fish with given ages. Fish age 35 and older are included in one bubble. The total number of fish aged are listed across the top of each panel. The ages with the highest ratios are posted to the right of each bubble.
+
+```{r figure17, fig.cap='(ref:figure17)',results='asis', out.width = "450px",out.height = "570px", fig.align="center"}
+
+   png(paste(figpath,'figure17.png',sep=''), width = 800, height = 924)  # -- starts writing a png to figure folder
+   dt.age.off   <-  paste("select * from Report_Survey_GFBIO_Age_MF_Prop where SetType='Offshore Standardized' and Year<=", yr+1, sep="")
+   #dat.age.off  <-  GetSQLData(dt.age.off,"Sablefish")   
+   #write.table(dat.age.off, file = paste(path,"figure17.csv",sep=''), row.names=FALSE, na="",col.names=TRUE,  sep=",") 
+   dat.age.off  <-  read.csv(paste(path,"figure17.csv", sep=''), header=T) # read from csv
+   #head(dat.age.off,50)
+
+   par(mfrow=c(2,1),cex=1.1)     # -- two vertical plots
+   par(xpd=NA)
+   
+   involve  <-  c()
+   involve  <-  unique(dat.age.off$Year)
+   maxyr    <-  max(involve)
+   minyr    <-  min(involve)
+
+   # -- plot bubbles for females
+   plot(dat.age.off$Year, dat.age.off$Age, type="n",xlab=" Year", ylab="", main="Females", ylim=c(0,42), xlim=c(minyr,maxyr),xaxt="n")
+   axis(1, seq(1990,2009,1))            
+   symbols(dat.age.off$Year, dat.age.off$Age, circles=pi*(dat.age.off$Female_Proportion),inches=0.3, add=T,col="light grey")
+
+   for (femaleyr in involve){
+    h   <-   unique(dat.age.off$Female_Yr_Total[dat.age.off$Year==femaleyr])
+    text(femaleyr + 0.15, 40, bquote(.(h)))   
+    text(femaleyr + 0.21, dat.age.off$Age[dat.age.off$f==1 & dat.age.off$Year==femaleyr],
+         dat.age.off$Age[dat.age.off$f==1 & dat.age.off$Year==femaleyr],col="red",cex=1.2, font=2)}
+
+    mtext(paste("Age","",sep=""), SOUTH<-2,  line=-1, adj=0.5,cex=1.4,  outer=TRUE)  # -- outside label
+    
+    di <- dev.size("in")
+    x  <- grconvertX(c(0, di[1]), from="in", to="user")
+    y  <- grconvertY(c(0, di[2]), from="in", to="user")
+    fig <- par("fig")
+    x <- x[1] + (x[2] - x[1]) * fig[1:2]
+    y <- y[1] + (y[2] - y[1]) * fig[3:4]
+    txt <- "A"
+    x <- x[1] + strwidth(txt, cex=3) / 2
+    y <- y[2] - strheight(txt, cex=3) / 2
+    text(x, y, txt, cex=1.5)
+    
+       # -- plot bubbles for males
+    plot(dat.age.off$Year, dat.age.off$Age, type="n", xlab=" Year", ylab="",main="Males", ylim=c(0,42), xlim=c(minyr,maxyr),xaxt="n")
+    axis(1, seq(1990,2009,1))      
+    symbols(dat.age.off$Year, dat.age.off$Age, circles=pi*(dat.age.off$Male_Proportion),inches=0.3, add=T, col="light grey")
+
+    for (maleyr in involve){
+    h      <-  unique(dat.age.off$Male_Yr_Total[dat.age.off$Year==maleyr])
+    text(maleyr + 0.15, 40, bquote(.(h)))    
+    text(maleyr + 0.21, dat.age.off$Age[dat.age.off$m==1 & dat.age.off$Year==maleyr],
+         dat.age.off$Age[dat.age.off$m==1 & dat.age.off$Year==maleyr],col="red",cex=1.2, font=2)}
+   
+    di <- dev.size("in")
+    x  <- grconvertX(c(0, di[1]), from="in", to="user")
+    y  <- grconvertY(c(0, di[2]), from="in", to="user")
+    fig <- par("fig")
+    x <- x[1] + (x[2] - x[1]) * fig[1:2]
+    y <- y[1] + (y[2] - y[1]) * fig[3:4]
+    txt <- "B"
+    x <- x[1] + strwidth(txt, cex=3) / 2
+    y <- y[2] - strheight(txt, cex=3) * 2
+    text(x, y, txt, cex=1.5)
+   
+    while (!is.null(dev.list()))  dev.off()  
+    img <-   paste(paste(figpath,'figure17.png',sep=''))   # -- retrieve png from figures folder
+             knitr::include_graphics(img)
+```
+\clearpage
+
+(ref:figure18) Coplot of average depth (m) vs average temperature ($^\circ$C) for a given 1-degree latitude range (blue bands) for `r yr` and `r yr+1`.  The number of fishing sets deployed with a SBE 39 recorder are represented by n.
+
+```{r figure18, fig.cap='(ref:figure18)',results='asis', out.width = "500px",out.height = "600px", fig.align="center"}
+
+   png(paste(figpath,'figure18a.png', sep=''), width = 920, height = 424)  # -- starts writing a png to figure folder
+   
+      # table SEABIRD_ReportCoplot created in the Sablefish.dbo.Build_Seabird_tables procedure
+      sbecp     <- paste("select * from SEABIRD_ReportCoplot where Year in(", yr,",", yr+1,")",sep="")
+      #ctddat    <- GetSQLData(sbecp,"Sablefish")        
+      #write.table(ctddat, file = paste(path,"figure18.csv",sep=''), row.names=FALSE, na="",col.names=TRUE,  sep=",") 
+      ctddat    <-  read.csv(paste(path,"figure18.csv", sep=''), header=T) # read from csv
+
+      par(mar=c(1,1,1,1.4),cex=2.2)           # -- par(mar=c(bottom,left,top,right) 
+      yrdat     <-  ctddat[ctddat$Year==yr,]
+      given.lat <-  matrix(c(48,48,49,49,50,50,51,51,52,52,53,53,54,54), nrow = 7, ncol=2, byrow=TRUE)
+      coplot(temperature  ~ depth| lat, data = yrdat, 
+             col = "red",  pch = 19, xlim=c(200,1400), ylim=c(2,10),
+             given.v = given.lat,
+             show.given=FALSE, rows=1, cex=1.8,
+             xlab=c("Average Depth (m)",""),  
+             ylab= expression(Average~Temperature~degree~C))
+
+             n48 <- length(unique(yrdat$Sets[yrdat$lat == 48]))  # count number of sets in lat band
+             n49 <- length(unique(yrdat$Sets[yrdat$lat == 49]))
+             n50 <- length(unique(yrdat$Sets[yrdat$lat == 50]))
+             n51 <- length(unique(yrdat$Sets[yrdat$lat == 51]))
+             n52 <- length(unique(yrdat$Sets[yrdat$lat == 52]))
+             n53 <- length(unique(yrdat$Sets[yrdat$lat == 53]))
+             n54 <- length(unique(yrdat$Sets[yrdat$lat == 54]))
+
+      labels   <-   c(n48,n49,n50,n51,n52,n53,n54)
+      for(j in 1:7) { text((280*j)-(100*(j-1)),8,paste("n=",labels[j],sep=""))  }
+      text(1350, 9, yr, font=2)                 # make year bold =2
+      while (!is.null(dev.list()))  dev.off()
+
+      png(paste(figpath,'figure18b.png',sep=''), width = 920, height = 424) # write png to file
+      yrdat<-ctddat[ctddat$Year==yr + 1,]
+      given.lat <-matrix(c(48,48,49,49,50,50,51,51,52,52,53,53,54,54),nrow = 7, ncol=2, byrow=TRUE)
+      coplot(temperature  ~ depth| lat, data = yrdat, 
+             col = "red",  pch = 19, xlim=c(200,1400), ylim=c(2,10),
+             given.v = given.lat,
+             show.given=FALSE, rows=1, cex=1.8,
+             xlab=c("Average Depth (m)",""),
+             ylab=expression(Average~Temperature~degree~C))
+
+             n48<-length(unique(yrdat$Sets[yrdat$lat == 48]))  # count number of sets in lat band
+             n49<-length(unique(yrdat$Sets[yrdat$lat == 49]))
+             n50<-length(unique(yrdat$Sets[yrdat$lat == 50]))
+             n51<-length(unique(yrdat$Sets[yrdat$lat == 51]))
+             n52<-length(unique(yrdat$Sets[yrdat$lat == 52]))
+             n53<-length(unique(yrdat$Sets[yrdat$lat == 53]))
+             n54<-length(unique(yrdat$Sets[yrdat$lat == 54]))
+
+     labels <- c(n48,n49,n50,n51,n52,n53,n54)
+     for(j in 1:7) { text((280*j)-(100*(j-1)),8,paste("n=",labels[j],sep=""))  }
+     text(1350, 9, yr + 1, font=2) 
+     while (!is.null(dev.list()))  dev.off()
+     
+     require('magick')   # in order to stack images
+     uno <- image_read(paste(figpath,'CoPlotTopMain.png', sep=''))    # Read external images
+     one <- image_read(paste(figpath,'figure18a.png', sep=''))
+     two <- image_read(paste(figpath,'figure18b.png', sep=''))
+     imgs = c(uno, one, two)
+
+     # concatenate them left-to-right (use 'stack=T' to do it top-to-bottom)
+     side_by_side = image_append(imgs, stack=T)
+     #image_write(side_by_side, path = paste(figpath,"figure18.png"))  # save png
+
+     while (!is.null(dev.list()))  dev.off()
+     img <-   paste(figpath,'figure18.png', sep='')   # -- retrieve png 
+     knitr::include_graphics(img)
+
+```
+\clearpage
+
+(ref:figure19) Vertical density ridgeplots of mean temperatures per year as reported by fishing set from the Sea-bird SBE 39 loggers on traps at three depth intervals, RD~1~ = shallow (100-450 m), RD~2~ = mid (450-850 m), RD~3~ = deep (850-1400 m). Lines indicate the 2.5% and 97.5% tails.
+
+```{r figure19, fig.cap='(ref:figure19)', results='asis', out.width = "380px",out.height = "416px", fig.align = "center"}
+
+      # table SEABIRD_ReportLinePlot created  by Sablefish.dbo.Build_Seabird_tables procedure
+      library(ggridges)
+      png(paste(figpath,'figure19.png',sep=''), width=600, height=700) # write png to file
+      
+      sea.bird           <-  "select * from SEABIRD_AverageTempPerSet where depth_stratum in('RD1','RD2','RD3') and Year < 2010"
+      #sea.bird.ridge    <-  GetSQLData(sea.bird,"Sablefish")   # read from SQL Server
+      #write.table(sea.bird.ridge, file = paste(path,"figure19.csv",sep=''),row.names=FALSE, na="",col.names=TRUE,  sep=",") 
+      sea.bird.ridge     <-  read.csv(paste(path,'figure19.csv',sep=''),header=T)    #  read from csv
+      
+      weather.raw2       <-  sea.bird.ridge[order(- sea.bird.ridge$Year,  sea.bird.ridge$Sets),]
+      weather.raw2$years <-  factor(weather.raw2$Year,levels=rev(unique(weather.raw2$Year)))
+      names(weather.raw2)<-  c("Year", "trip", "Sets", "Avgtemp", "Mintemp", "Maxtemp", "Depth Stratum", "lat", "years") 
+      
+     
+      
+      # Mean temperatures by year
+      ggplot(weather.raw2, aes(x = Avgtemp, y = years, fill=`Depth Stratum`, alpha = 0.4)) +
+             scale_x_continuous(limits = c(1.5,8.5)) +
+
+             geom_density_ridges(
+                aes(point_shape = `Depth Stratum`, alpha = 0.7), 
+                alpha = .5, point_alpha = .8, jittered_points = TRUE ) +    # points mean
+                stat_density_ridges(quantile_lines = TRUE, quantiles = c(0.025, 0.975), alpha = 0.6) +
+                xlab("Mean Temperature °C") +
+                ylab("Year") +
+                theme_bw() + theme(text = element_text(size = 15)) 
+       
+       while (!is.null(dev.list()))  dev.off()
+       img <-   paste(figpath,'figure19.png', sep='')   # retrieve png 
+                knitr::include_graphics(img)
+
+```
+
+
+
+
+
+
+
+
+

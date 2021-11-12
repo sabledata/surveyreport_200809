@@ -206,6 +206,12 @@
 
 (ref:figure10) Annual mean weight of sablefish per trap (kg/trap) (A);  annual mean number of sablefish per trap (#fish/trap) (B); annual mean weight of sablefish (kg) (C) by StRS survey strata over time. Horizontal line is median and blue dots are arithmetic mean.
 
+
+<!--
+KH: Suggested revision to figure 10 label. Lisa - can you confirm that this is correct?
+(ref:figure10) Annual distributions of catch statistics over all coastwide StRS sets between 2003 and 2009, including: (A) CPUE in units of weight of sablefish per trap (kg/trap);  (B) CPUE in units of sablefish per trap (#fish/trap); and (C) mean Sablefish body weight (kg). Horizontal line is median, grey shading shows the 25th and 75% percentiles, and blue dots show arithmetic means. Red text shows the value of the arithmetic mean.
+-->
+
 ```{r figure10, fig.cap='(ref:figure10)', out.width = "450px", out.height = "576px",echo=FALSE, fig.align="center", warning=FALSE}
 
        png(paste(figpath,'figure10.png', sep=''), width=600, height=800) # write png to file
@@ -256,6 +262,11 @@
 \clearpage
 
 (ref:figure11) Offshore indexing annual mean weight of sablefish per trap (kg/trap) (A);  annual mean number of sablefish per trap (#fish/trap) (B); annual mean weight of sablefish (kg) (C) over time. Horizontal line is median and blue dots are arithmetic mean.
+
+<!--
+KH: Suggested revision to figure 11 label. Lisa - can you confirm that this is correct?
+(ref:figure10) Annual distributions of catch statistics over all offshore traditional indexing sets between 1990 and 2009, including: (A) CPUE in units of weight of sablefish per trap (kg/trap);  (B) CPUE in units of sablefish per trap (#fish/trap); and (C) mean Sablefish body weight (kg). Horizontal line is median, grey shading shows the 25th and 75% percentiles, and blue dots show arithmetic means. Red text shows the value of the arithmetic mean.
+-->
 
 ```{r figure11, fig.cap='(ref:figure11)',echo=FALSE,dpi=550, out.width = "448px", out.height = "600px", fig.align = "center",warning=FALSE}
     #------S Q L ---C P U E ----B O X P L O T ---O F F S H O R E---S T A N D A R D I Z E D---------
@@ -349,6 +360,13 @@
 \clearpage
 
 (ref:figure12) Average weight of sablefish per trap (kg/trap) (A);  average number of sablefish per trap (#fish/trap) (B); annual average weight of sablefish (kg) (C) at mainland inlets over time.  Horizontal line is median and blue dots are arithmetic mean.
+
+
+<!--
+KH: Suggested revision to figure 12 label. Lisa - can you confirm that this is correct?
+(ref:figure10) Annual distributions of catch statistics over all mainland inlet indexing sets between 1994 and 2009, including: (A) CPUE in units of weight of sablefish per trap (kg/trap);  (B) CPUE in units of sablefish per trap (#fish/trap); and (C) mean Sablefish body weight (kg). Horizontal line is median, grey shading shows the 25th and 75% percentiles, and blue dots show arithmetic means. Red text shows the value of the arithmetic mean.
+-->
+
 
 ```{r figure12, fig.cap='(ref:figure12)', results='asis', out.width = "450px",out.height = "560px", fig.align="center"}
 

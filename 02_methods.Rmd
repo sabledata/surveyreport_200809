@@ -2,11 +2,11 @@
 
 ## SURVEY DESIGN
  
-Survey design for `r yr` and `r yr+1` sablefish research and assessment employed a stratified random sampling (StRS) component and a traditional standardized component (Table \@ref(tab:Table1)). In `r yr`,  two exploratory sets were added (Figure \@ref(fig:figure1)).  Under the StRS component, random fishing sets were conducted in five spatial and three depth strata (Figure \@ref(fig:figure2), and Figure \@ref(fig:figure3)).  The traditional component consisted of standardized fishing sets at nine offshore indexing localities (Figure \@ref(fig:figure2), and Figure \@ref(fig:figure3)) and four mainland inlets (Figure \@ref(fig:figure4)).
+Survey design for <!-- the --> `r yr` and `r yr+1` sablefish research and assessment <!-- KH: surveys--> employed a stratified random sampling (StRS) component and a traditional standardized component (Table \@ref(tab:Table1)). In `r yr`,  two exploratory sets were added (Figure \@ref(fig:figure1)).  Under the StRS component, random fishing sets were conducted in five spatial and three depth strata (Figure \@ref(fig:figure2), and Figure \@ref(fig:figure3)).  The traditional component consisted of standardized fishing sets at nine offshore indexing localities (Figure \@ref(fig:figure2), and Figure \@ref(fig:figure3)) and four mainland inlets (Figure \@ref(fig:figure4)).
 
 ### STRATIFIED RANDOM SAMPLING SURVEY DESIGN COMPONENT
 
-The StRS design began in 2003 with the purpose of distributing tag releases at random, collecting biological samples and developing a catch-rate based index of abundance [@Wyeth2003]. It also provided an alternative design to the historic traditional offshore component of the survey which occured at fixed locations. 
+The StRS design began in 2003 with the purpose of distributing tag releases at random, collecting biological samples and developing a catch-rate based index of abundance [@Wyeth2003]. It also provided an alternative design to the historic traditional offshore component of the survey which occurred at fixed locations. 
 
 Under the StRS design, the survey area is partitioned into five spatial strata (S~1~ to S~5~) and three depth strata (RD~1~ to RD~3~) for a total of 15 strata. The spatial strata are S~1~ (South West Coast Vancouver Island or SWCVI), S~2~ (North West Coast Vancouver Island or NWCVI), S~3~ (Queen Charlotte Sound or QCS), S~4~ (South West Coast of Haida Gwaii or SWCHG), and S~5~ (North West Coast of Haida Gwaii or NWCHG).  The three targeted depth ranges were 100-250 fathoms (RD~1~), 250-450 fathoms (RD~2~), and 450-750 fathoms (RD~3~). The area within each of the 15 strata were divided into 2 km x  2 km grid cells or ‘fishing blocks’ from which set locations were randomly chosen (Figure \@ref(fig:figure1)).
 
@@ -48,7 +48,15 @@ Sets at offshore indexing localities had a targeted soak time of 24 hours.  Trap
 
 As the groundline was hauled, catch by species from each trap were sorted into baskets and entered in the charter catch log form (Appendix \@ref(app:third-appendix), Figure C.2).  Baskets were then weighed to the nearest 0.2 kg on a motion compensating scale and given a basket use code of D, A, B, T or MT.   Code D designated fish species as discards (released alive); code A allocated fish to age samples; code B allocated sablefish for length, sex, maturtiy samples; code T allocated sablefish to be tagged and released; code L allocated fish for length samples; and code MT indicated an empty trap.  Trace values (TR) were entered to record species with a total weight of less than 1 kg. 
 
-The Federal Court of Appeal ruling (Larocque v. Canada (Minister of Fisheries and Oceans Canada) [@Larocque2006]) was used to support scientific research of key commercial fish in place of quota allocation.  As a result, sablefish in traps assigned code D were released at sea.
+The Federal Court of Appeal ruling (Larocque v. Canada (Minister of Fisheries and Oceans Canada) [@Larocque2006]) was used to support scientific research of key commercial fish in place of quota allocation. <!-- KH comment: The ruling itself didn't support research.  Do you mean to say that DFO covered the full financial cost of the survey in 2008 and 2009 as a result of the Larocque ruling? --> As a result, sablefish in traps assigned code D were released at sea.
+
+<!--KH suggested revision to above paragraph:
+In previous survey years, Sablefish assigned to code D were retained for sale to help fund survey costs. As a result of the Federal Court of Appeal ruling Larocque v. Canada (Minister of Fisheries and Oceans Canada) [@Larocque2006], this practice was not permitted in 2008 and 2009.  As a result, DFO provided emergency funds to support the survey in these years and all Sablefish in traps assigned code D were released at sea. 
+
+(Although, maybe my summary should be fact checked? as I'm not 100% clear if this is correct? - although, maybe you know???)
+
+In any case, it seems the key points to get across in the paragraph is that these years were different from previous years because no fish were retained for sale.
+-->
 
 Crew members would inform the recorder about any damage to a trap and report the serial number of the temperature and pressure logger.  The next day, the entries on charter catch log form were transposed to tabular format on the charter catch log entry form (Appendix \@ref(app:third-appendix), Figure C.3).
 

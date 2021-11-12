@@ -19,6 +19,15 @@ abstract: |
   
   Catch per unit effort (CPUE) is an important result from this survey as it is used to infer population trends.  Survey data from 2008 and 2009 at offshore indexing localities reveal decreasing trends in catch rates similar to those in the late 1990’s.  CPUE at mainland inlet sites have varied in a predictable manner over time with peak CPUE occurring every 5-7 years and showing an upward trend in 2009.  StRS sets in 2009 show the lowest levels since 2003 in both mean weight and numbers of fish per trap. 
   
+  
+  <!-- KH suggested revisions:
+  
+  This document describes sampling activities and summarizes results from the 2008 and 2009 British Columbia sablefish research and assessment surveys. These annual surveys utilized sampling strategies at stratified random (StRS) sites, offshore indexing localities and mainland inlets. The random component was comprised of StRS sets at five depth-stratified spatial areas along the British Columbia coast.  The traditional component was comprised of standardized sets conducted at nine offshore indexing localities and four mainland inlet localities.  In total, 26,802 sablefish were caught in 2008, of which 8,126 were used for biological samples and 8,300 were tagged and released. In 2009, a total of 22,521 sablefish were caught, of which 7,282 were used for biological samples and 7,474 were tagged and released. 
+  
+  Results are summarized for Sablefish catch-per-unit-effort (CPUE), Sablefish biological sampling (sex ratio, length, weight, and age distribution), overall catch composition, and oceanographic data at set locations in 2008 and 2009. CPUE statistics for 2008 and 2009 are presented in relation to previous years in available time series to describe trends in survey CPUE over time.  StRS sets in 2009 show the lowest levels since 2003 in both mean weight and numbers of fish per trap.  Survey data from 2008 and 2009 at offshore indexing localities reveal similar decreasing trends in catch rates, with 2008 and 2009 rates similar to previous low points in the late 1990’s.  CPUE at mainland inlet sites have varied over time with CPUE showing a recent upward trend in 2009.  
+  
+  -->
+  
 abstract_other: |
   Le présent document décrit les activités d’échantillonnage et résume les résultats des relevés de recherche et d’évaluation de la morue charbonnière menées en Colombie-Britannique en 2008 et 2009.
 

@@ -27,13 +27,36 @@ The `r yr + 1` survey was 49 days long, commencing in Victoria, BC on October 8,
     
 ```    
 
+<!-- KH: suggest adding something like this here:
+
+Catch per unit effort (CPUE) statistics for 2008 and 2009 are presented in relation to the available time series for each of the survey components: (i) stratified random (StRS), (ii) traditional offshore indexing sites, and (iii) traditional mainland inlet indexing sites. As a result, 2008 - 2009 catch rates can be discussed in relation to historical patterns.
+-->
+
 ### Stratified Random CPUE
 
-In general, catch per unit effort as indexed by kilograms (Figure \@ref(fig:figure7)) and numbers (Figure \@ref(fig:figure8)) of sablefish per trap, attained the highest catch rates in the middle depth stratum (RD~2~) in most years. The average weight of sablefish over time in the deep (RD~3~) and shallow waters (RD~1~) tended to be higher in the northern survey areas. In the middle depths (RD~2~), the mean weights were consistently higher in area S~4~ (Figure \@ref(fig:figure9)). CPUE over survey years (2003 to `r yr+1`) reached over 30 kg per trap and over 11 fish per trap in 2003 and 2006.  The lowest CPUE was seen in 2009 in both mean weight and numbers of fish per trap (Figure \@ref(fig:figure10),a,b).  The average weight of sablefish remained ~ 3 kg over time (Figure \@ref(fig:figure10),c).
+In general, catch per unit effort, as indexed by kilograms (Figure \@ref(fig:figure7)) and numbers (Figure \@ref(fig:figure8)) of sablefish per trap, attained the highest catch rates in the middle depth stratum (RD~2~) in most years.  The average weight of sablefish over time in the deep (RD~3~) and shallow waters (RD~1~) tended to be higher in the northern survey areas. In the middle depths (RD~2~), the mean weights were consistently higher in area S~4~ (Figure \@ref(fig:figure9)). 
+<!--
+KH: suggest replacing above text section with this:
+In most years, catch per unit effort (CPUE), as indexed by kilograms (Figure \@ref(fig:figure7)) and numbers (Figure \@ref(fig:figure8)) of sablefish per trap, attain the highest catch rates in the middle depth stratum (RD~2~). This pattern held true in both 2008 and 2009. There has also been a historical tendency for the average weight of sablefish in the deep (RD~3~) and shallow strata (RD~1~) to be higher in northern survey areas than southern survey areas in most years (Figure \@ref(fig:figure9)). This pattern was somewhat apparent among the shallowest depth strata in 2008 and 2009, with the southernmost spatial stratum (S~1~ RD~1~) having lower average weights than more northern RD~1~ strata. However, this pattern did not hold true for deep strata in 2008 and 2009. Average weights of Sablefish in S~1 RD~3 and S~2 RD~3 were comparable or larger than more northern R~3~ strata in both years. In the middle depths (RD~2~), the mean weights were consistently higher in spatial area S~4~ (Figure \@ref(fig:figure9)).    
+-->
+
+CPUE over survey years (2003 to `r yr+1`) reached over 30 kg per trap and over 11 fish per trap in 2003 and 2006.  The lowest CPUE was seen in 2009 in both mean weight and numbers of fish per trap (Figure \@ref(fig:figure10),a,b).  The average weight of sablefish remained ~ 3 kg over time (Figure \@ref(fig:figure10),c).
+
+<!--
+KH: suggest replacing above text section with this: 
+Annual trends in coastwide CPUE and mean Sablefish weight are shown in Figure \@ref(fig:figure10).  Annual CPUE over all StRS survey years (2003-2009) peaked at over over 30 kg per trap and over 11 fish per trap in 2003 and 2006. The most recent year, 2009, was a low point in the CPUE series; both in both mean weight and numbers of fish per trap (Figure \@ref(fig:figure10),a,b).  The average weight of Sablefish increased slightly in 2008 and 2009 compared to the previous few years. Mean weight overal all StRS sets was 3.3 kg and 3.2 kg in 2008 and 2009, repsectively.     
+-->
 
 ### Offshore Indexing CPUE
 
-Standardized sets were conducted at offshore indexing localities from 1988 through 2009. The 1988 and 1989 standardized catch rates were not included in Figure \@ref(fig:figure11) as the fishing protocols were significantly different than future surveys [@Wyeth2003].  The mean catch rates remained high from 1990 through 1993, with the year 1993 yielding the highest mean catch rate. Then, consistent lower catch rates were exhibited from 1994 to 2002, with the year 2001 yielding the lowest mean catch rate. In 2003 and 2004, the mean catch rates were again higher and similar to those in the first couple years in the 1990’s. The years 2005 through 2009 declined to lower catch rates that resembled those in the late 1990’s (Figure \@ref(fig:figure11),a,b).  The mean sablefish weight remained over 3.0 kg for years 1990 to 2009 with the exception of 1990, 2006 and 2007 (Figure \@ref(fig:figure11),c).
+Standardized sets were conducted at offshore indexing localities from 1988 through 2009. The 1988 and 1989 standardized catch rates are not included in Figure \@ref(fig:figure11) as the fishing protocols were significantly different than surveys from 1990 onwards [@Wyeth2003].  Catch rates remained high from 1990 through 1993, with the year 1993 yielding the highest mean catch rate <!-- KH: in the time series, both in kg /trap and numbers of fish / trap -->. 
+
+Then, consistently lower catch rates were exhibited from 1994 to 2002, with the year 1993 yielding the lowest mean catch rate.  <!-- KH suggested revision: Catch rates dropped substantially in 1994, with consistently lower catch rates persisting from 1994 to 2002. The year 2001 yielded the lowest mean catch rate in the series.--> 
+
+In 2003 and 2004, catch rates were again higher <!--KH add:, with CPUE distributions that showed more overlap with those of 1990 - 1993 --> and <!-- had similar mean values as those years. --> to those in the first couple years in the 1990’s. The years 2005 through 2009 <!-- KH: showed a declining trend in catch rates, with the final years of the time series (2007 - 2009) resembling low points from the late 1990's --> declined to lower catch rates that resembled those in the late 1990’s (Figure \@ref(fig:figure11),a,b).  The mean sablefish weight remained over 3.0 kg for years 1990 to 2009 with the exception of 1990, 2006 and 2007 (Figure \@ref(fig:figure11),c).
+
+<!-- KH note: See suggested revisions in caption labels for Figures 10-12 in 04_figures.Rmd-->
+
 
 ```{r CatchRateTextInlet, echo=FALSE}
     
@@ -69,7 +92,7 @@ Standardized sets were conducted at offshore indexing localities from 1988 throu
 
 ### Mainland Inlet CPUE
 
-CPUE in the mainlaind inlets has varied in a relatively predictable manner over time with peak CPUE occuring every 5-7 years. In the early part of the time series (mid-1990s) average CPUE remained relatively constant before a peak in CPUE was observed in 1999, followed by declines to consistent levels until another peak in 2003 and 2004 (Figure \@ref(fig:figure12) a,b). Annual mean weights of sablefish over time were less than those at offshore indexing localities (Figure \@ref(fig:figure12) c).
+CPUE in the mainland inlets has varied in a relatively predictable manner over time with peak CPUE occurring every 5-7 years. <!--Might be too short of a time series to say 'predicatble'.  Perhaps re-word as: CPUE in the mainland inlets has shown a pattern of increases and decreases over the available time series. --> In the early part of the time series (mid-1990s) average CPUE remained relatively constant before a peak in CPUE was observed in 1999, followed by declines to consistent levels until another peak in 2003 and 2004 (Figure \@ref(fig:figure12) a,b). Annual mean weights of sablefish over time were less than those at offshore indexing localities (Figure \@ref(fig:figure12) c).
 
 
 ```{r SpeciesCompositionText, echo=FALSE}
@@ -318,7 +341,7 @@ CPUE in the mainlaind inlets has varied in a relatively predictable manner over 
 
 A total of `r total.StRS.yr1[1]` (`r strs.sp.Comp.yr1$ntotal`) taxonomic groups were represented in the catches in StRS sets in `r yr[1]` (Table \@ref(tab:Table3)).  These included `r roundfish.StRS.count.yr1[1]` (`r strs.sp.Comp.yr1$nRound`) roundfish species, `r rockfish.StRS.count.yr1[1]` (`r strs.sp.Comp.yr1$nRock`) rockfish species, `r flatfish.StRS.count.yr1[1]` (`r strs.sp.Comp.yr1$nFlat`) flatfish species and `r invert.StRS.count.yr1[1]` (`r strs.sp.Comp.yr1$nInvert`) invertebrate species. Other than sablefish, the most common species, by weight,  were  `r top.StRS.sp1.yr1` (*`r top.StRS.science1.yr1`*), `r top.StRS.sp2.yr1` (*`r top.StRS.science2.yr1`*) and `r top.StRS.sp3.yr1` (*`r top.StRS.science3.yr1`*).
 
-A total of `r total.OffS.yr1` (`r OffS.sp.Comp.yr1$ntotal`) taxonomic groups were represented in the catches in standardized sets at offshore indexing localities in `r yr[1]` (Table \@ref(tab:Table4)).  These included `r roundfish.OffS.count.yr1[1]` (`r OffS.sp.Comp.yr1$nRound`) roundfish species, `r rockfish.OffS.count.yr1[1]` (`r OffS.sp.Comp.yr1$nRock`) rockfish species, `r flatfish.OffS.count.yr1[1]` (`r OffS.sp.Comp.yr1$nFlat`) flatfish species and `r invert.OffS.count.yr1[1]` (`r OffS.sp.Comp.yr1$nInvert`) invertebrate species. Other than sablefish, the most common species, by weight,  were  `r top.OffShore.sp1.yr1` (*`r top.OffShore.science1.yr1`*), `r top.OffShore.sp2.yr1` (*`r top.OffS.science2.yr1`*) and `r top.OffShore.sp3.yr1` (*`r top.OffS.science3.yr1`*).
+A total of `r total.OffS.yr1` (`r OffS.sp.Comp.yr1$ntotal`) taxonomic groups were represented in the catches in traditional standardized sets at offshore indexing localities in `r yr[1]` (Table \@ref(tab:Table4)).  These included `r roundfish.OffS.count.yr1[1]` (`r OffS.sp.Comp.yr1$nRound`) roundfish species, `r rockfish.OffS.count.yr1[1]` (`r OffS.sp.Comp.yr1$nRock`) rockfish species, `r flatfish.OffS.count.yr1[1]` (`r OffS.sp.Comp.yr1$nFlat`) flatfish species and `r invert.OffS.count.yr1[1]` (`r OffS.sp.Comp.yr1$nInvert`) invertebrate species. Other than sablefish, the most common species, by weight,  were  `r top.OffShore.sp1.yr1` (*`r top.OffShore.science1.yr1`*), `r top.OffShore.sp2.yr1` (*`r top.OffS.science2.yr1`*) and `r top.OffShore.sp3.yr1` (*`r top.OffS.science3.yr1`*).
 
 A total of `r total.Inlet.yr1` (`r inlet.sp.Comp.yr1$ntotal`) taxonomic groups were represented in the catches from traditional standardized sets conducted in mainland inlet localities in `r yr[1]` (Table \@ref(tab:Table5)).  These included `r roundfish.Inlet.yr1` (`r inlet.sp.Comp.yr1$nRound`) roundfish species, `r rockfish.Inlet.yr1` (`r inlet.sp.Comp.yr1$nRock`)  rockfish species, `r flatfish.Inlet.yr1` (`r inlet.sp.Comp.yr1$nFlat`) flatfish species and `r invert.Inlet.yr1` (`r inlet.sp.Comp.yr1$nInvert`) invertebrate species.  The most common species captured, in order of total weights, other than sablefish were `r top.Inlet.sp1.yr1` (*`r top.Inlet.science1.yr1`*) and  `r top.Inlet.sp2.yr1` (*`r top.Inlet.science2.yr1`*).
 
@@ -761,9 +784,9 @@ Out of the `r format(count.sample.yr1[1,2], big.mark=",")` sablefish captured du
 
 At the exploratory sets, three sablefish were captured, tagged and released (Appendix \@ref(app:eighth-appendix)).
 
-Overall, the StRS sets had a higher proportion of females than males over the spatial strata `r stratafemale`.  More females than males were seen in the shallow depth stratum within the spatial strata `r shallsfemale`.  In the mid depth stratum, there were more males than females in `r midsmale`.  The deepest depth stratum saw more females in spatial strata `r deepsfemale`. The mean fork length for females reached `r round(newdata[16,6]/10,1)` cm in area S~4~ (Table \@ref(tab:Table10)).
+Overall, the StRS sets <!-- KH suggestion: Within the StRS sites in 2008, there was --> a higher proportion of females than males in spatial strata `r stratafemale`. <!-- The sex ratio of sampled catch was equal in S~1~.--> More females than males were seen in the shallow depth stratum within the spatial strata `r shallsfemale`.  <!--In contrast, --> there were more males than females in `r midsmale` <!--in the mid depth stratum-->.  The deepest depth stratum saw more females in spatial strata `r deepsfemale`. The largest mean fork length for females occurred in area S~4~, where the mean length reached `r round(newdata[16,6]/10,1)` cm (Table \@ref(tab:Table10)).
 
-The northern offshore indexing localities of Langara Island-North Frederick, Hippa Island, Buck Point and Gowgaia Bay had a higher proportion of females than males. South of Haida Gwaii, Triangle Island and Esperenza Inlet had a higher proportion of females.  The mean fork length for females was `r femaleMeanLengthOffshore.yr1` cm (Table \@ref(tab:Table11)).
+The northern offshore indexing localities of Langara Island-North Frederick, Hippa Island, Buck Point and Gowgaia Bay had a higher proportion of females than males. South of Haida Gwaii, Triangle Island and Esperenza Inlet had a higher proportion of females <!--KH:, while all other index sites south of Haida Gwaii had higher proportions of males -->. <!--Overall, a higher proportion of females than makes were sampled at offshore indexing localities in 2008 --> The mean fork length for females <!--KH: over all traditional offshore indexing localities--> was `r femaleMeanLengthOffshore.yr1` cm (Table \@ref(tab:Table11)).
 
 More females than males were sampled in `r inlet.words.yr1` mainland inlet localities and samples ranged from `r femaleRange.yr1[1]` to `r femaleRange.yr1[2]` percent females.  The mean fork length for females was `r round(biosumm.Inlet.yr1[5,6]/10,1)` cm (Table \@ref(tab:Table12)). 
 
@@ -979,9 +1002,9 @@ Over the `r yr + 1` offshore indexing sets, a total of `r format(count.Samples.y
 
 Out of the `r format(count.Samples.yr2[1,2], big.mark=",")` sablefish captured during the `r yr+1` mainland inlet sets, `r format(count.Samples.yr2[1,5], big.mark=",")` were tagged and released, `r format(count.Samples.yr2[1,7], big.mark=",")` were used for biological sampling.  Of the tagged fish, `r format(count.Samples.yr2[1,3], big.mark=",")` were previously tagged fish re-released with a new tag (Appendix \@ref(app:nineth-appendix)).
 
-Overall, the StRS design sets had a higher proportion of females than males over `r stratafemale.2`.  The sex ratio was female biased in the shallow and deep depth strata within `r shallsfemale.2`.  In the mid depth stratum, there were more males than females in `r midsmale.2`. The mean fork length for females reached `r round(newdata.2[16,6]/10,1)` cm in area S~4~ (Table \@ref(tab:Table13)).
+Overall, the StRS design sets had a higher proportion of females than males over `r stratafemale.2`.  The sex ratio was female biased in the shallow and deep depth strata within `r shallsfemale.2`.  In the mid depth stratum, there were more males than females in `r midsmale.2`. The largest mean fork length for females reached `r round(newdata.2[16,6]/10,1)` cm in area S~4~ (Table \@ref(tab:Table13)).
 
-The northern offshore indexing localities of Langara Island-North Frederick, Hippa Island, Buck Point, Gowgaia Bay and Cape St. James had a higher proportion of females than males.  The remaining southern localities were male biased.  The mean fork length for all females was `r femaleMeanLengthOffshore.yr2` cm (Table \@ref(tab:Table14)).
+The northern offshore indexing localities of Langara Island-North Frederick, Hippa Island, Buck Point, Gowgaia Bay and Cape St. James had a higher proportion of females than males.  The remaining southern localities were male biased.  The mean fork length for all females over all offshore indexing sites was `r femaleMeanLengthOffshore.yr2` cm (Table \@ref(tab:Table14)).
 
 More females than males were sampled in `r inlet.words.yr2` traditional mainland inlet localities and samples ranged from `r femaleRange.yr2[1]` to `r femaleRange.yr2[2]` percent females. The mean fork length for all females was `r round(biosumm.Inlet.yr2[5,6]/10,2)` cm  (Table \@ref(tab:Table15)).  
 
@@ -1034,9 +1057,9 @@ More females than males were sampled in `r inlet.words.yr2` traditional mainland
 ```
 ###  Length Distributions
 
-Significant differences in length distributions between female and male sablefish are exhibited in the data collected from the StRS portion of the 2003 - `r yr+1` surveys. The mean fork length ($\bar{x}$) for the  `r format(StRS.femaleCnt, big.mark=",")` females was `r female.mean.lendata.StRS` cm and the mean fork length ($\bar{x}$) for the `r format(StRS.maleCnt, big.mark=",")` males was `r male.mean.lendata.StRS` cm (Figure \@ref(fig:figure13),a).
+Significant <!--KH: may want to get rid of word 'significant' since no statistical test was done? --> differences in length distributions between female and male sablefish are exhibited in the data collected from the StRS portion of the 2003 - `r yr+1` surveys. The mean fork length ($\bar{x}$) for the  `r format(StRS.femaleCnt, big.mark=",")` females <!--sampled between 2003 and 2009 --> was `r female.mean.lendata.StRS` cm and the mean fork length ($\bar{x}$) for the `r format(StRS.maleCnt, big.mark=",")` males <!--sampled between 2003 and 2009 --> was `r male.mean.lendata.StRS` cm (Figure \@ref(fig:figure13),a).
 
-In `r yr`, the StRS mean fork length for the `r format(StRS.femaleCntyr1, big.mark=",")` females was `r StRS.fLmean.yr1` cm  and the average mean fork length for the `r format(StRS.maleCntyr1, big.mark=",")` males was `r StRS.mLmean.yr1 ` cm.  In `r yr+1`, the average mean fork length for the `r format(StRS.femaleCntyr2, big.mark=",")` females was `r StRS.fLmean.yr2` cm and the average mean fork length for the `r format(StRS.maleCntyr2, big.mark=",")` males was `r StRS.mLmean.yr2` cm (Figure \@ref(fig:figure13),b). 
+In `r yr`, the StRS mean fork length for the `r format(StRS.femaleCntyr1, big.mark=",")` sampled females was `r StRS.fLmean.yr1` cm  and the average mean fork length for the `r format(StRS.maleCntyr1, big.mark=",")` sampled males was `r StRS.mLmean.yr1 ` cm.  In `r yr+1`, the average mean fork length for the `r format(StRS.femaleCntyr2, big.mark=",")` sampled females was `r StRS.fLmean.yr2` cm and the average mean fork length for the sampled `r format(StRS.maleCntyr2, big.mark=",")` males was `r StRS.mLmean.yr2` cm (Figure \@ref(fig:figure13),b). 
 
 ```{r LengthDistributionsOffShore}
 
@@ -1077,9 +1100,9 @@ In `r yr`, the StRS mean fork length for the `r format(StRS.femaleCntyr1, big.ma
     
 ```
 
-Notable differences in length distributions between female and male sablefish are exhibited in the offshore indexing locality data of the 1990 - `r yr+1` surveys. The mean fork length ($\bar{x}$) for `r format(Off.femaleCnt, big.mark=",")` females was `r female.mean.lendata.Off` cm and the mean fork length ($\bar{x}$) for `r format(Off.maleCnt, big.mark=",")` males was `r male.mean.lendata.Off` cm (Figure \@ref(fig:figure14),a). 
+Notable differences in length distributions between female and male sablefish are exhibited in the offshore indexing locality data of the 1990 - `r yr+1` surveys. The mean fork length ($\bar{x}$) for `r format(Off.femaleCnt, big.mark=",")` females <!--KH: sampled between 1990 and `r yr+1` --> was `r female.mean.lendata.Off` cm and the mean fork length ($\bar{x}$) for `r format(Off.maleCnt, big.mark=",")` males <!--KH: sampled between 1990 and `r yr+1` --> was `r male.mean.lendata.Off` cm (Figure \@ref(fig:figure14),a). 
 
-In `r yr`, the offshore indexing locality mean fork length for the `r format(Off.femaleCntyr1, big.mark=",")` females was `r Off.fLm.yr1` cm and the average mean fork length for the `r format(Off.maleCntyr1, big.mark=",")` males was `r Off.mLm.yr1` cm.  In `r yr+1`, the average mean fork length for the `r format(Off.femaleCntyr2, big.mark=",")` females was `r Off.fLm.yr2`  cm and the average mean fork length for the `r format(Off.maleCntyr2, big.mark=",")` males was `r Off.mLm.yr2` cm (Figure \@ref(fig:figure14),b). 
+In `r yr`, the offshore indexing locality mean fork length for the `r format(Off.femaleCntyr1, big.mark=",")` sampled females was `r Off.fLm.yr1` cm and the average mean fork length for the `r format(Off.maleCntyr1, big.mark=",")` sampled males was `r Off.mLm.yr1` cm.  In `r yr+1`, the average mean fork length for the `r format(Off.femaleCntyr2, big.mark=",")` sampled females was `r Off.fLm.yr2`  cm and the average mean fork length for the `r format(Off.maleCntyr2, big.mark=",")` sampled males was `r Off.mLm.yr2` cm (Figure \@ref(fig:figure14),b). 
 
 ### Weight-Length 
 
@@ -1248,12 +1271,12 @@ During the `r yr` and `r yr+1` sablefish surveys, `r count.sample.yr1[2,3] + cou
 
 ## SABLEFISH AGES
 
-The highest proportion of female ages in the StRS sets for 2003 through to `r yr +1` were 3, 4, 5, 6, 7, 8 and 9 years of age, respectively (Figure \@ref(fig:figure16), a).
+The highest proportion of female ages in the StRS sets for years 2003 through to `r yr +1` were 3, 4, 5, 6, 7, 8 and 9 years of age, respectively (Figure \@ref(fig:figure16), a). <!-- KH: This pattern suggests a large 2000 recruitment event that was subsequently tracked through time as it aged -->
 The highest proportion of male ages in StRS sets for 2003 through to `r yr +1` were 3, 5, 5, 6, 8, 8 and 8 years of age, respectively (Figure \@ref(fig:figure16), b).
 
-The highest proportion of female ages in offshore indexing localities from 1990 to 1992 were 4, 11 and 7 years of age, respectively.  A cohort appeared in 1993 through to 1998 as 3, 4, 5, 6, 7 and 8 year olds.  The years 1999 to 2003 were dominated by 5 year olds, except 2001, where 6 year olds prevailed.  Another cohort appeared in 2004 through 2009 as 4, 5, 6, 6, 8 and 8 year olds, respectively (Figure \@ref(fig:figure17),a). 
+The highest proportion of female ages in offshore indexing localities from 1990 to 1992 were 4, 11 and 7 years of age, respectively.  A cohort appeared in 1993 through to 1998 as 3, 4, 5, 6, 7 and 8 year olds.  The years 1999 to 2003 were dominated by 5 year olds, except 2001, where 6 year olds prevailed.  Another cohort appeared in 2004 through 2009 as 4, 5, 6, 6, 8 and 8 year olds, respectively (Figure \@ref(fig:figure17),a). <!-- KH: This latter cohort pattern matches that seen for females in the StRS sets starting in 2004 -->
 
-The highest proportion of male ages in offshore indexing localities from 1990 to 1992 were 4, 6 and 7 years of age, respectively.  A cohort appeared in 1993 through to 1999 as  3, 4, 6, 6, 7, 8 and 9 year olds.  The year 2000 was dominated by 5 year olds,  2001 and 2002 were dominated by 7 year olds. Another cohort appeared in 2003 through 2009 as 5, 5, 6, 6, 7, 8 and 9 year olds,  respectively (Figure \@ref(fig:figure17),b).
+The highest proportion of male ages in offshore indexing localities from 1990 to 1992 were 4, 6 and 7 years of age, respectively.  <!-- As with female samples from offshore indexing localities, -->A cohort appeared in 1993 through to 1999 as  3, 4, 6, 6, 7, 8 and 9 year olds.  The year 2000 was dominated by 5 year olds,  while 2001 and 2002 were dominated by 7 year olds. Another cohort appeared in 2003 through 2009 as 5, 5, 6, 6, 7, 8 and 9 year olds,  respectively (Figure \@ref(fig:figure17),b).
 
 Historic data until `r yr+1` lists the oldest female at `r oldest.Female` years of age, collected in `r oldest.Fem.Yr` and the oldest male sablefish at `r oldest.Male` years of age, collected in the years `r oldest.Male.Yr[1]`, `r oldest.Male.Yr[2]` and `r oldest.Male.Yr[3]`.
 
